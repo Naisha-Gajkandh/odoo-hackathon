@@ -91,7 +91,7 @@ const FuelExpenses = ({ searchQuery }) => {
           <div className="bg-primary text-on-primary px-8 py-5 rounded-2xl flex flex-col items-center md:items-end soft-shadow border border-white/10 select-none">
             <span className="font-bold uppercase tracking-wider text-[9px] opacity-75 mb-1">Total Operational Cost</span>
             <div className="flex items-baseline gap-2">
-              <span className="font-headline-md text-2xl font-black">${data.totalOperationalCost?.toLocaleString('en-US')}</span>
+              <span className="font-headline-md text-2xl font-black">₹{data.totalOperationalCost?.toLocaleString('en-US')}</span>
               <span className="text-[11px] font-bold text-success-green flex items-center gap-0.5">
                 <span className="material-symbols-outlined text-[14px]">trending_down</span>
                 {data.trendChange}
@@ -174,7 +174,7 @@ const FuelExpenses = ({ searchQuery }) => {
             <div className="mt-8">
               <p className="font-bold text-[10px] text-secondary uppercase tracking-wider">Maintenance Cost</p>
               <h4 className="font-headline-md text-2xl font-black text-primary mt-1">
-                ${data.maintenanceCost?.toLocaleString('en-US')}
+                ₹{data.maintenanceCost?.toLocaleString('en-US')}
               </h4>
               <p className="text-[10px] text-secondary mt-1.5">+12% from last month</p>
             </div>

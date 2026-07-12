@@ -15,9 +15,9 @@ const ProfileMenu = ({ currentRole, currentEmail, onLogout }) => {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const displayName = currentRole === 'Dispatcher' ? 'George Davidson' : 'Sarah Williams';
-  const displayEmail = currentEmail || 'george.davidson@email.com';
-  const avatarUrl = "https://lh3.googleusercontent.com/aida-public/AB6AXuCtlXpImn4B2hQxA0A3_V9kkXPEvJ_0yE22RDB-6YO9swd8l2QhWoCZ_ezbzfcUGKLsw7dRQu8kZ0gQQwzAfaiJ01YuU-G5HJB4qWLdQn1d4sdGyv6fNLGbTtD4Mv3IBmZxKoDHrnKVg-hZf8MXAL9VHWs5CEbnZR_cXbuTk7Z_MTp04RHpwcaX-YnCSzZwrILBT5yabO_rX9P9HAhdjlx_xhkpv9twxMD6tmMtREOHN5P1CE1IQieb";
+  const displayName = currentRole === 'Dispatcher' ? 'Krisha Vaghani' : 'Naisha Gajkandh';
+  const displayEmail = currentEmail || (currentRole === 'Dispatcher' ? 'krisha@transitops.co' : 'manager@transitops.co');
+  const avatarUrl = `https://api.dicebear.com/7.x/notionists/svg?seed=${displayName}&backgroundColor=e63946`;
 
   return (
     <div className="relative" ref={menuRef}>

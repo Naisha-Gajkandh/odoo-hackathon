@@ -260,9 +260,9 @@ const VehicleRegistry = ({ searchQuery }) => {
                     {/* Simplified Graphic profile */}
                     <div className="w-full relative hover:scale-102 transition-transform duration-500">
                       <img 
-                        className="w-full opacity-90 grayscale" 
+                        className="w-full h-[280px] object-cover rounded-2xl opacity-90 shadow-md" 
                         alt="Vehicle registry profile" 
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaII216ECGC95uo0kMouMFhhDju9IA9FOebpdl_0eeBdyU1lSuTz0oSpYufLdA2HVx5e91ejnvuRwzcDiQMWAyf08N3g3iE4Xz-5x6V2YNDk14DLzzw43U2uivE70XW3nFeIRmlL-JwseLJZ_PaEEynmRJ_V2Wwgez_ijqgvhW-_4N07EPAhbhCx1qEE8dWR3hyKCSjGMwZNVFOulQa7v8vTxfOKfkbaw31QYDC16DoWazpxzKSkUm"
+                        src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=500&q=80"
                       />
                       <div className="absolute inset-0 flex flex-col items-center justify-end pb-8">
                         <div className="w-[85%] h-12 bg-white/40 border border-white/60 backdrop-blur-sm rounded-2xl overflow-hidden flex items-center px-1">

@@ -13,16 +13,53 @@ const DriverManagement = ({ searchQuery }) => {
   const [filter, setFilter] = useState('ALL');
   const [activeTab, setActiveTab] = useState('License & Docs');
 
-  // Simulate loading on mount
+  // Fetch from backend
   useEffect(() => {
-    const timer = setTimeout(() => {
-      setDrivers(mockDrivers);
-      if (mockDrivers.length > 0) {
-        setSelectedDriver(mockDrivers[0]);
+    const fetchDrivers = async () => {
+      try {
+        setLoading(true);
+        // Fetch from the real backend service
+        const { driverService } = await import('../services/tripService');
+        const apiDrivers = await driverService.getAllDrivers();
+        
+        // Merge real backend data with mock details for complex UI rendering
+        const mergedDrivers = apiDrivers.map(apiDriver => {
+          // Attempt to find matching mock by name to borrow realistic histories/stats
+          const fallbackMock = mockDrivers.find(m => m.name === apiDriver.name) || mockDrivers[0];
+          
+          return {
+            ...fallbackMock,
+            id: apiDriver.id.toString(),
+            name: apiDriver.name,
+            status: apiDriver.status,
+            routeStatus: apiDriver.status,
+            licenseExpiration: apiDriver.license_expiry_date,
+            contact_number: apiDriver.contact_number,
+            safetyScore: apiDriver.safety_score,
+            licenseDetails: {
+              ...fallbackMock.licenseDetails,
+              documentNumber: apiDriver.license_number,
+              classType: apiDriver.license_category
+            }
+          };
+        });
+        
+        setDrivers(mergedDrivers);
+        if (mergedDrivers.length > 0) {
+          setSelectedDriver(mergedDrivers[0]);
+        }
+      } catch (err) {
+        console.error('Failed to load drivers from API, falling back to mocks:', err);
+        setDrivers(mockDrivers);
+        if (mockDrivers.length > 0) {
+          setSelectedDriver(mockDrivers[0]);
+        }
+      } finally {
+        setLoading(false);
       }
-      setLoading(false);
-    }, 600); // 600ms simulation
-    return () => clearTimeout(timer);
+    };
+    
+    fetchDrivers();
   }, []);
 
   const handleSelectDriver = (driver) => {

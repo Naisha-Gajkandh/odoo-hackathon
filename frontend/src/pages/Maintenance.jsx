@@ -149,7 +149,7 @@ const Maintenance = ({ searchQuery }) => {
     try {
       const result = await maintenanceService.closeActiveLog(selectedLog.id);
       if (result) {
-        toast.success(`Record for ${selectedLog.vehicleId} closed. Total Cost: $${result.historyItem.cost}`);
+        toast.success(`Record for ${selectedLog.vehicleId} closed. Total Cost: ₹${result.historyItem.cost}`);
         
         // Refresh logs and history
         const [updatedLogs, updatedHistory] = await Promise.all([
@@ -397,15 +397,21 @@ const Maintenance = ({ searchQuery }) => {
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                     <div className="bg-background p-4 rounded-2xl border border-border/40">
                       <p className="text-[10px] font-bold text-secondary uppercase tracking-widest">Parts Costs</p>
-                      <p className="font-headline-md text-xl font-black text-primary mt-1">$490.00</p>
+                      <p className="font-headline-md text-xl font-black text-primary mt-1">₹490.00</p>
                     </div>
-                    <div className="bg-background p-4 rounded-2xl border border-border/40">
-                      <p className="text-[10px] font-bold text-secondary uppercase tracking-widest">Labor Costs</p>
-                      <p className="font-headline-md text-xl font-black text-primary mt-1">$350.00</p>
+                  </div>
+                  <div className="flex items-center gap-4 p-4 rounded-xl border border-border bg-background">
+                    <span className="material-symbols-outlined text-3xl text-primary">engineering</span>
+                    <div>
+                      <p className="text-xs text-secondary font-bold tracking-wider uppercase">Labor</p>
+                      <p className="font-headline-md text-xl font-black text-primary mt-1">₹350.00</p>
                     </div>
-                    <div className="bg-background p-4 rounded-2xl border border-border/40">
-                      <p className="text-[10px] font-bold text-secondary uppercase tracking-widest">Total Invoice</p>
-                      <p className="font-headline-md text-xl font-black text-transit-blue mt-1">$840.00</p>
+                  </div>
+                  <div className="col-span-2 flex items-center gap-4 p-4 rounded-xl border border-transit-blue/20 bg-transit-blue-container/30">
+                    <span className="material-symbols-outlined text-3xl text-transit-blue">account_balance_wallet</span>
+                    <div>
+                      <p className="text-xs text-transit-blue font-bold tracking-wider uppercase">Total Estimated Cost</p>
+                      <p className="font-headline-md text-xl font-black text-transit-blue mt-1">₹840.00</p>
                     </div>
                   </div>
 
@@ -422,17 +428,17 @@ const Maintenance = ({ searchQuery }) => {
                         <tr className="hover:bg-secondary-container/10">
                           <td className="px-4 py-3 font-semibold">Engine Diagnostic Sensors (Replacement)</td>
                           <td className="px-4 py-3">2</td>
-                          <td className="px-4 py-3 text-right font-semibold">$380.00</td>
+                          <td className="px-4 py-3 text-right font-semibold">₹380.00</td>
                         </tr>
                         <tr className="hover:bg-secondary-container/10">
                           <td className="px-4 py-3 font-semibold">Premium Synthetic Oil & Filter kit</td>
                           <td className="px-4 py-3">1</td>
-                          <td className="px-4 py-3 text-right font-semibold">$110.00</td>
+                          <td className="px-4 py-3 text-right font-semibold">₹110.00</td>
                         </tr>
                         <tr className="hover:bg-secondary-container/10">
                           <td className="px-4 py-3 font-semibold">Diagnostics Lab / Mechanics Hours</td>
                           <td className="px-4 py-3">3.5 hrs</td>
-                          <td className="px-4 py-3 text-right font-semibold">$350.00</td>
+                          <td className="px-4 py-3 text-right font-semibold">₹350.00</td>
                         </tr>
                       </tbody>
                     </table>

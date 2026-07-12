@@ -192,7 +192,7 @@ const TripDispatch = ({ searchQuery, currentRole }) => {
     ? (typeof selectedTrip.driver === 'object' ? selectedTrip.driver.name : `Driver #${selectedTrip.driver}`)
     : 'No Driver Assigned';
 
-  const driverAvatar = "https://lh3.googleusercontent.com/aida-public/AB6AXuCtlXpImn4B2hQxA0A3_V9kkXPEvJ_0yE22RDB-6YO9swd8l2QhWoCZ_ezbzfcUGKLsw7dRQu8kZ0gQQwzAfaiJ01YuU-G5HJB4qWLdQn1d4sdGyv6fNLGbTtD4Mv3IBmZxKoDHrnKVg-hZf8MXAL9VHWs5CEbnZR_cXbuTk7Z_MTp04RHpwcaX-YnCSzZwrILBT5yabO_rX9P9HAhdjlx_xhkpv9twxMD6tmMtREOHN5P1CE1IQieb";
+  const driverAvatar = typeof selectedTrip?.driver === 'object' && selectedTrip.driver.avatarUrl ? selectedTrip.driver.avatarUrl : "https://api.dicebear.com/7.x/initials/svg?seed=Driver";
   
   const vehicleMaxLoad = selectedTrip?.vehicle 
     ? parseFloat(typeof selectedTrip.vehicle === 'object' ? selectedTrip.vehicle.max_load_capacity_kg : 2000)
@@ -250,7 +250,7 @@ const TripDispatch = ({ searchQuery, currentRole }) => {
                       <img 
                         className="w-full h-full object-cover grayscale" 
                         alt="Vehicle icon"
-                        src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaII216ECGC95uo0kMouMFhhDju9IA9FOebpdl_0eeBdyU1lSuTz0oSpYufLdA2HVx5e91ejnvuRwzcDiQMWAyf08N3g3iE4Xz-5x6V2YNDk14DLzzw43U2uivE70XW3nFeIRmlL-JwseLJZ_PaEEynmRJ_V2Wwgez_ijqgvhW-_4N07EPAhbhCx1qEE8dWR3hyKCSjGMwZNVFOulQa7v8vTxfOKfkbaw31QYDC16DoWazpxzKSkUm"
+                        src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=500&q=80"
                       />
                     </div>
                     <div>

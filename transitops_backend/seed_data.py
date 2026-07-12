@@ -69,37 +69,41 @@ def run_seed():
     # 3. Add Drivers
     drivers_data = [
         {
-            "name": "Rajesh Kumar",
+            "name": "Amit Patel",
             "license_number": "DL-1234567890",
             "contact_number": "+919876543210",
             "license_expiry_date": "2027-12-31",
             "license_category": "HMV",
+            "safety_score": 95,
         },
         {
-            "name": "Amit Singh",
+            "name": "Shreya Goswami",
             "license_number": "UP-0987654321",
             "contact_number": "+918765432109",
             "license_expiry_date": "2028-05-15",
             "license_category": "LMV",
+            "safety_score": 88,
         },
         {
-            "name": "Priya Sharma",
+            "name": "Martin Parmar",
             "license_number": "MH-1122334455",
             "contact_number": "+917654321098",
             "license_expiry_date": "2026-10-20",
             "license_category": "LMV",
+            "safety_score": 72,
         },
         {
-            "name": "Vijay Verma",
+            "name": "Arjun Joshi",
             "license_number": "KA-5544332211",
             "contact_number": "+916543210987",
             "license_expiry_date": "2025-08-11",
             "license_category": "HMV",
+            "safety_score": 92,
         },
     ]
 
     for d_data in drivers_data:
-        Driver.objects.get_or_create(license_number=d_data["license_number"], defaults=d_data)
+        Driver.objects.update_or_create(license_number=d_data["license_number"], defaults=d_data)
     print(f"Seeded {len(drivers_data)} drivers.")
 
     # 4. Add a sample draft trip for Indian locations

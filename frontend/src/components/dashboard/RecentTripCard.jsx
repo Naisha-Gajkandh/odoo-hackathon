@@ -170,9 +170,13 @@ const RecentTripCard = ({ trip }) => {
 
       {/* Body */}
       <div className="flex items-center">
-        {/* Vehicle sticker — fills the w-36 h-24 box completely */}
-        <div className="w-36 h-24 flex-shrink-0 mx-3 mb-4 group-hover:scale-105 transition-transform duration-500">
-          {getVehicleSticker(vehicleName)}
+        {/* Vehicle Image — fills the w-36 h-24 box exactly */}
+        <div className="w-36 h-24 flex-shrink-0 mx-3 mb-4 group-hover:scale-105 transition-transform duration-500 rounded-xl overflow-hidden border border-border/50">
+          <img 
+            src="https://images.unsplash.com/photo-1601584115197-04ecc0da31d7?auto=format&fit=crop&w=500&q=80"
+            alt={trip.imageAlt || vehicleName}
+            className="w-full h-full object-cover"
+          />
         </div>
 
         {/* Details */}

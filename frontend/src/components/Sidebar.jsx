@@ -119,14 +119,14 @@ const Sidebar = ({
           <div className="w-10 h-10 rounded-full overflow-hidden border border-border flex-shrink-0 bg-secondary-container">
             <img 
               className="w-full h-full object-cover" 
-              alt="George Davidson"
+              alt="Krisha Vaghani"
               src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtlXpImn4B2hQxA0A3_V9kkXPEvJ_0yE22RDB-6YO9swd8l2QhWoCZ_ezbzfcUGKLsw7dRQu8kZ0gQQwzAfaiJ01YuU-G5HJB4qWLdQn1d4sdGyv6fNLGbTtD4Mv3IBmZxKoDHrnKVg-hZf8MXAL9VHWs5CEbnZR_cXbuTk7Z_MTp04RHpwcaX-YnCSzZwrILBT5yabO_rX9P9HAhdjlx_xhkpv9twxMD6tmMtREOHN5P1CE1IQieb"
             />
           </div>
           {!isCollapsed && (
             <div className="text-left overflow-hidden min-w-0">
-              <p className="text-xs font-bold text-primary truncate">George Davidson</p>
-              <p className="text-[10px] text-secondary truncate">george.davidson@email.com</p>
+              <p className="text-xs font-bold text-primary truncate">Krisha Vaghani</p>
+              <p className="text-[10px] text-secondary truncate">krisha@transitops.co</p>
             </div>
           )}
         </div>

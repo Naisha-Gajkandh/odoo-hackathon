@@ -10,11 +10,11 @@ const TripForm = ({ vehicles, drivers, onCreateTrip, weightLimitError, setWeight
   } = useForm({
     mode: 'onChange',
     defaultValues: {
-      source: 'Main Hub - Chicago',
-      destination: '',
+      source: 'Mumbai Terminal',
+      destination: 'Pune Depot',
       vehicle: '',
       driver: '',
-      cargo_weight_kg: 850,
+      cargo_weight_kg: 700,
       planned_distance_km: 100, // Defaults to 100 in background
     }
   });
