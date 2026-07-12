@@ -55,9 +55,9 @@ class RouteResult:
 
     distance_km: float
     duration_seconds: int
-    source_coords: tuple[float, float]   # (lat, lon)
+    source_coords: tuple[float, float]  # (lat, lon)
     destination_coords: tuple[float, float]  # (lat, lon)
-    routing_source: str = "osrm"         # "osrm" | "manual"
+    routing_source: str = "osrm"  # "osrm" | "manual"
 
 
 def _nominatim_headers() -> dict[str, str]:
@@ -156,7 +156,7 @@ def route_between(
     coordinates = f"{src_lon},{src_lat};{dst_lon},{dst_lat}"
     url = f"{base_url}/route/v1/driving/{coordinates}"
     params = {
-        "overview": "false",   # we only need summary, not full geometry
+        "overview": "false",  # we only need summary, not full geometry
         "alternatives": "false",
     }
 
@@ -174,8 +174,8 @@ def route_between(
         return None
 
     route = data["routes"][0]
-    distance_m = route["distance"]   # metres
-    duration_s = route["duration"]   # seconds
+    distance_m = route["distance"]  # metres
+    duration_s = route["duration"]  # seconds
 
     result = RouteResult(
         distance_km=round(distance_m / 1000, 2),
@@ -185,13 +185,17 @@ def route_between(
         routing_source="osrm",
     )
 
-    cache.set(cache_key, {
-        "distance_km": result.distance_km,
-        "duration_seconds": result.duration_seconds,
-        "source_coords": list(result.source_coords),
-        "destination_coords": list(result.destination_coords),
-        "routing_source": result.routing_source,
-    }, _ROUTE_CACHE_TTL)
+    cache.set(
+        cache_key,
+        {
+            "distance_km": result.distance_km,
+            "duration_seconds": result.duration_seconds,
+            "source_coords": list(result.source_coords),
+            "destination_coords": list(result.destination_coords),
+            "routing_source": result.routing_source,
+        },
+        _ROUTE_CACHE_TTL,
+    )
 
     return result
 

@@ -6,6 +6,7 @@ accounts/serializers.py
 - Implements the "Invalid credentials / account locked after 5 failed
   attempts" behavior shown in the login mockup's error callout.
 """
+
 from datetime import timedelta
 
 from django.contrib.auth import get_user_model
@@ -33,9 +34,7 @@ class RoleTokenObtainPairSerializer(TokenObtainPairSerializer):
         user = User.objects.filter(email=email).first()
 
         if user and user.locked_until and user.locked_until > timezone.now():
-            raise BusinessRuleError(
-                "Invalid credentials / account locked after 5 failed attempts."
-            )
+            raise BusinessRuleError("Invalid credentials / account locked after 5 failed attempts.")
 
         try:
             data = super().validate(attrs)
@@ -45,9 +44,7 @@ class RoleTokenObtainPairSerializer(TokenObtainPairSerializer):
                 if user.failed_login_attempts >= MAX_FAILED_ATTEMPTS:
                     user.locked_until = timezone.now() + LOCKOUT_DURATION
                 user.save(update_fields=["failed_login_attempts", "locked_until"])
-            raise BusinessRuleError(
-                "Invalid credentials / account locked after 5 failed attempts."
-            )
+            raise BusinessRuleError("Invalid credentials / account locked after 5 failed attempts.")
 
         # success -> reset counter
         if user:

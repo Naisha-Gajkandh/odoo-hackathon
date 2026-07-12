@@ -87,9 +87,7 @@ ASGI_APPLICATION = "config.asgi.application"
 _database_url = config("DATABASE_URL", default="")
 
 if _database_url:
-    DATABASES = {
-        "default": dj_database_url.parse(_database_url)
-    }
+    DATABASES = {"default": dj_database_url.parse(_database_url)}
 else:
     DATABASES = {
         "default": {
@@ -133,9 +131,7 @@ REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
-    "DEFAULT_PERMISSION_CLASSES": (
-        "rest_framework.permissions.IsAuthenticated",
-    ),
+    "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     "EXCEPTION_HANDLER": "core.exceptions.custom_exception_handler",
     "DEFAULT_FILTER_BACKENDS": (
         "django_filters.rest_framework.DjangoFilterBackend",

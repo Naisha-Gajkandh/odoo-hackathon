@@ -55,10 +55,7 @@ class RecentTripsView(APIView):
     permission_classes = [IsAuthenticated, HasModulePermission]
 
     def get(self, request: Request) -> Response:
-        trips = (
-            Trip.objects.select_related("vehicle", "driver")
-            .order_by("-updated_at")[:4]
-        )
+        trips = Trip.objects.select_related("vehicle", "driver").order_by("-updated_at")[:4]
         results = [
             {
                 "trip_code": t.trip_code,
@@ -94,12 +91,14 @@ class ReportsSummaryView(APIView):
     permission_classes = [IsAuthenticated, HasModulePermission]
 
     def get(self, request: Request) -> Response:
-        return Response({
-            "fuel_efficiency_km_per_l": services.fuel_efficiency(),
-            "fleet_utilization_percent": services.fleet_utilization_percent(),
-            "operational_cost": float(services.fleet_operational_cost()),
-            "redundancy_rate_percent": services.redundancy_rate_percent(),
-        })
+        return Response(
+            {
+                "fuel_efficiency_km_per_l": services.fuel_efficiency(),
+                "fleet_utilization_percent": services.fleet_utilization_percent(),
+                "operational_cost": float(services.fleet_operational_cost()),
+                "redundancy_rate_percent": services.redundancy_rate_percent(),
+            }
+        )
 
 
 class VehicleROIView(APIView):
@@ -135,25 +134,29 @@ class ReportsCSVExportView(APIView):
         response["Content-Disposition"] = 'attachment; filename="transitops_report.csv"'
 
         writer = csv.writer(response)
-        writer.writerow([
-            "Registration No",
-            "Vehicle",
-            "Status",
-            "Acquisition Cost (INR)",
-            "Operational Cost (Fuel + Maintenance)",
-            "Odometer (km)",
-            "ROI",
-        ])
+        writer.writerow(
+            [
+                "Registration No",
+                "Vehicle",
+                "Status",
+                "Acquisition Cost (INR)",
+                "Operational Cost (Fuel + Maintenance)",
+                "Odometer (km)",
+                "ROI",
+            ]
+        )
 
         for row in services.per_vehicle_roi_list():
-            writer.writerow([
-                row["registration_number"],
-                row["name_model"],
-                row["status"],
-                row["acquisition_cost"],
-                row["operational_cost"],
-                row["odometer"],
-                row["roi"],
-            ])
+            writer.writerow(
+                [
+                    row["registration_number"],
+                    row["name_model"],
+                    row["status"],
+                    row["acquisition_cost"],
+                    row["operational_cost"],
+                    row["odometer"],
+                    row["roi"],
+                ]
+            )
 
         return response

@@ -5,31 +5,49 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
     dependencies = [
-        ('fleet', '0001_initial'),
+        ("fleet", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='MaintenanceRecord',
+            name="MaintenanceRecord",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_deleted', models.BooleanField(default=False)),
-                ('deleted_at', models.DateTimeField(blank=True, null=True)),
-                ('service_type', models.CharField(max_length=128)),
-                ('cost', models.DecimalField(decimal_places=2, default=0, max_digits=12)),
-                ('date', models.DateField()),
-                ('status', models.CharField(choices=[('Active', 'Active'), ('Closed', 'Closed')], default='Active', max_length=16)),
-                ('vehicle', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='maintenance_records', to='fleet.vehicle')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_deleted", models.BooleanField(default=False)),
+                ("deleted_at", models.DateTimeField(blank=True, null=True)),
+                ("service_type", models.CharField(max_length=128)),
+                ("cost", models.DecimalField(decimal_places=2, default=0, max_digits=12)),
+                ("date", models.DateField()),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[("Active", "Active"), ("Closed", "Closed")],
+                        default="Active",
+                        max_length=16,
+                    ),
+                ),
+                (
+                    "vehicle",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="maintenance_records",
+                        to="fleet.vehicle",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-updated_at'],
-                'abstract': False,
+                "ordering": ["-updated_at"],
+                "abstract": False,
             },
         ),
     ]

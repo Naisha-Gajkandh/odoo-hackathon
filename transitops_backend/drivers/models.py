@@ -29,10 +29,7 @@ class Driver(BaseModel):
     def is_assignable(self):
         """Business rule (4): Drivers with expired licenses or Suspended
         status cannot be assigned to trips."""
-        return (
-            self.status == Driver.Status.AVAILABLE
-            and not self.license_expired
-        )
+        return self.status == Driver.Status.AVAILABLE and not self.license_expired
 
 
 class SafetyEvent(BaseModel):
@@ -52,9 +49,9 @@ def recalculate_safety_score(driver: Driver, window=50):
     from django.db.models import Avg
 
     recent = driver.safety_events.order_by("-recorded_at")[:window]
-    avg = SafetyEvent.objects.filter(
-        id__in=[e.id for e in recent]
-    ).aggregate(avg=Avg("score_delta"))["avg"]
+    avg = SafetyEvent.objects.filter(id__in=[e.id for e in recent]).aggregate(
+        avg=Avg("score_delta")
+    )["avg"]
 
     driver.safety_score = round(avg, 2) if avg is not None else driver.safety_score
     driver.save(update_fields=["safety_score"])

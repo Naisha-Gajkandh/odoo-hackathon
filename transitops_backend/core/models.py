@@ -9,6 +9,7 @@ Maintenance, Fuel Logs, Expenses). Gives us:
 
 Every model in every app should inherit from BaseModel, NOT models.Model.
 """
+
 from django.db import models
 from django.utils import timezone
 
@@ -50,7 +51,7 @@ class BaseModel(models.Model):
     is_deleted = models.BooleanField(default=False)
     deleted_at = models.DateTimeField(null=True, blank=True)
 
-    objects = SoftDeleteManager()      # default queryset excludes deleted
+    objects = SoftDeleteManager()  # default queryset excludes deleted
     all_objects = AllObjectsManager()  # explicit access to everything
 
     class Meta:

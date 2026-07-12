@@ -81,11 +81,13 @@ class TripCreateSerializer(serializers.ModelSerializer):
         if vehicle and cargo_weight is not None:
             if cargo_weight > vehicle.max_load_capacity_kg:
                 overage = cargo_weight - vehicle.max_load_capacity_kg
-                errors.extend([
-                    f"Vehicle Capacity: {vehicle.max_load_capacity_kg:g} kg",
-                    f"Cargo Weight: {cargo_weight:g} kg",
-                    f"Capacity exceeded by {overage:g} kg - dispatch blocked.",
-                ])
+                errors.extend(
+                    [
+                        f"Vehicle Capacity: {vehicle.max_load_capacity_kg:g} kg",
+                        f"Cargo Weight: {cargo_weight:g} kg",
+                        f"Capacity exceeded by {overage:g} kg - dispatch blocked.",
+                    ]
+                )
 
         # ── 2. Vehicle availability ──────────────────────────────────────────
         if vehicle and vehicle.status != Vehicle.Status.AVAILABLE:

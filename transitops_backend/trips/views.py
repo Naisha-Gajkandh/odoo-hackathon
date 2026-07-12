@@ -137,13 +137,15 @@ class TripViewSet(viewsets.ModelViewSet):
             planned_distance_km=trip.planned_distance_km,
             estimated_duration_seconds=trip.estimated_duration_seconds,
         )
-        return Response({
-            "trip_code": trip.trip_code,
-            "eta": eta,
-            "routing_source": trip.routing_source,
-            "planned_distance_km": float(trip.planned_distance_km),
-            "estimated_duration_seconds": trip.estimated_duration_seconds,
-        })
+        return Response(
+            {
+                "trip_code": trip.trip_code,
+                "eta": eta,
+                "routing_source": trip.routing_source,
+                "planned_distance_km": float(trip.planned_distance_km),
+                "estimated_duration_seconds": trip.estimated_duration_seconds,
+            }
+        )
 
     # ── POST /api/trips/{id}/reject/ ───────────────────────────────────────────
     @action(detail=True, methods=["post"])
