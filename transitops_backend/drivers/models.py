@@ -5,7 +5,6 @@ from core.models import BaseModel
 
 
 class Driver(BaseModel):
-
     class Status(models.TextChoices):
         AVAILABLE = "Available", "Available"
         ON_TRIP = "On Trip", "On Trip"
@@ -14,32 +13,18 @@ class Driver(BaseModel):
 
     name = models.CharField(max_length=128)
 
-    license_number = models.CharField(
-        max_length=32,
-        unique=True
-    )
+    license_number = models.CharField(max_length=32, unique=True)
 
-    license_category = models.CharField(
-        max_length=32
-    )
+    license_category = models.CharField(max_length=32)
 
     license_expiry_date = models.DateField()
 
-    contact_number = models.CharField(
-        max_length=20
-    )
+    contact_number = models.CharField(max_length=20)
 
-    safety_score = models.DecimalField(
-        max_digits=5,
-        decimal_places=2,
-        default=100
-    )
+    safety_score = models.DecimalField(max_digits=5, decimal_places=2, default=100)
 
     status = models.CharField(
-        max_length=16,
-        choices=Status.choices,
-        default=Status.AVAILABLE,
-        db_index=True
+        max_length=16, choices=Status.choices, default=Status.AVAILABLE, db_index=True
     )
 
     class Meta:
@@ -57,49 +42,26 @@ class Driver(BaseModel):
 
     @property
     def is_assignable(self):
-        return (
-            self.status == Driver.Status.AVAILABLE
-            and not self.license_expired
-        )
+        return self.status == Driver.Status.AVAILABLE and not self.license_expired
 
 
 class SafetyEvent(BaseModel):
+    driver = models.ForeignKey(Driver, on_delete=models.CASCADE, related_name="safety_events")
 
-    driver = models.ForeignKey(
-        Driver,
-        on_delete=models.CASCADE,
-        related_name="safety_events"
-    )
+    event_type = models.CharField(max_length=64)
 
-    event_type = models.CharField(
-        max_length=64
-    )
+    score_delta = models.DecimalField(max_digits=5, decimal_places=2)
 
-    score_delta = models.DecimalField(
-        max_digits=5,
-        decimal_places=2
-    )
-
-    recorded_at = models.DateTimeField(
-        auto_now_add=True
-    )
+    recorded_at = models.DateTimeField(auto_now_add=True)
 
 
 def recalculate_safety_score(driver: Driver, window=50):
 
     from django.db.models import Avg
 
-    recent_ids = (
-        driver.safety_events
-        .order_by("-recorded_at")
-        .values_list("id", flat=True)[:window]
-    )
+    recent_ids = driver.safety_events.order_by("-recorded_at").values_list("id", flat=True)[:window]
 
-    avg = (
-        SafetyEvent.objects
-        .filter(id__in=recent_ids)
-        .aggregate(avg=Avg("score_delta"))["avg"]
-    )
+    avg = SafetyEvent.objects.filter(id__in=recent_ids).aggregate(avg=Avg("score_delta"))["avg"]
 
     if avg is not None:
         score = round(float(avg), 2)
@@ -107,8 +69,6 @@ def recalculate_safety_score(driver: Driver, window=50):
 
         driver.safety_score = score
 
-        driver.save(
-            update_fields=["safety_score"]
-        )
+        driver.save(update_fields=["safety_score"])
 
     return driver.safety_score

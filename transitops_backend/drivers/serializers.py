@@ -15,14 +15,9 @@ from .models import Driver
 
 
 class DriverSerializer(serializers.ModelSerializer):
+    license_expired = serializers.BooleanField(read_only=True)
 
-    license_expired = serializers.BooleanField(
-        read_only=True
-    )
-
-    is_assignable = serializers.BooleanField(
-        read_only=True
-    )
+    is_assignable = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Driver

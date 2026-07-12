@@ -16,7 +16,6 @@ GET /api/drivers/?ordering=
 from __future__ import annotations
 
 from django.utils import timezone
-
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from rest_framework.filters import OrderingFilter, SearchFilter
@@ -31,13 +30,9 @@ from .serializers import DriverSerializer
 
 
 class DriverViewSet(viewsets.ModelViewSet):
-
     module = "drivers"
 
-    permission_classes = [
-        IsAuthenticated,
-        HasModulePermission
-    ]
+    permission_classes = [IsAuthenticated, HasModulePermission]
 
     serializer_class = DriverSerializer
 
@@ -60,9 +55,7 @@ class DriverViewSet(viewsets.ModelViewSet):
         "updated_at",
     ]
 
-    ordering = [
-        "-updated_at"
-    ]
+    ordering = ["-updated_at"]
 
     filter_backends = [
         SearchFilter,
@@ -72,12 +65,7 @@ class DriverViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return Driver.objects.all()
 
-
-    @action(
-        detail=False,
-        methods=["get"],
-        url_path="assignable"
-    )
+    @action(detail=False, methods=["get"], url_path="assignable")
     def assignable(self, request: Request) -> Response:
         """
         GET /api/drivers/assignable/
@@ -96,9 +84,6 @@ class DriverViewSet(viewsets.ModelViewSet):
             license_expiry_date__gte=today,
         )
 
-        serializer = DriverSerializer(
-            queryset,
-            many=True
-        )
+        serializer = DriverSerializer(queryset, many=True)
 
         return Response(serializer.data)
