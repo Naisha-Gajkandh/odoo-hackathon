@@ -123,6 +123,10 @@ export const driverService = {
     const response = await apiClient.get('/api/drivers/assignable/');
     return response.data;
   },
+  getAllDrivers: async () => {
+    const response = await apiClient.get('/api/drivers/');
+    return response.data;
+  },
 };
 
 export default apiClient;

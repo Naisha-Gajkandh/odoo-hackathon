@@ -1,12 +1,12 @@
 export const mockDrivers = [
   {
     id: "FL-00921",
-    name: "Marcus Sterling",
+    name: "Amit Patel",
     role: "Senior Fleet Lead",
     experience: "12 Years Experience",
     status: "On Duty", // "On Duty", "Off Duty", "Suspended"
     routeStatus: "On Route", // Display status
-    avatarUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuATqmtNU1HryO6aiY08Awd_BlmiDYsSUdaKOXtDxKnY_vt3MMbx7axxA5KKIPMiWstfubK9gKJ-8XlJJEsVAlG-hDH9dKdzmHY5hOlJe21gOQOTseEYKJeoudzxIwOziSD6UGPxzKfsVgRueVESA46fAt9nSg_HPAfLNiK7zqcssOdbQL1rYxTNnuTt3QR6HAFYhscysDsLO4A_RQ-H6Cg76PiCrxdDsD_uPLfbEKvMqWFTQd3QJKfq",
+    avatarUrl: "https://api.dicebear.com/7.x/notionists/svg?seed=Felix&backgroundColor=e63946",
     safetyScore: 98,
     licenseExpiration: "12/2026",
     licenseDetails: {
@@ -23,9 +23,9 @@ export const mockDrivers = [
     },
     currentVehicle: "Freightliner Cascadia (TX-9902)",
     lastInspection: "Nov 12, 2023 (Pass)",
-    emergencyContact: "Sarah Sterling (Wife)",
+    emergencyContact: "Neha Patel (Wife)",
     currentLocation: {
-      description: "En-route: Houston Terminal",
+      description: "En-route: Mumbai Terminal",
       speed: "65 mph",
       temp: "72°F",
       mapUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDXoes9M5y85vaev9IR2oEoesdC6k62itk9tV8eM4n3GJKpQjtmB7wDLaFmoW7bUx8w9kywjBflzrlX46aHrAIUY31rWl-g1PDgJGE5UYcSJWYMVU-Kaa7-_KBBEDmx-o7OdfkOuU3uvMFpeQWOh9NgFZKX37ll1yqnkKM2pi7g5FTVqOs9C2DsQrOuVRxYlwK7nROmiXkJ247BPc_YuhW39dTerQMM8UuuSdlRJ_vqQ8tLHcaumCiM"
@@ -34,7 +34,7 @@ export const mockDrivers = [
       {
         id: "st-1",
         title: "Quarterly Defensive Driving Cert",
-        description: "Renewed certification with 100% score.",
+        description: "Renewed certification with 90% score.",
         date: "Nov 05, 2023",
         type: "positive"
       },
@@ -54,9 +54,9 @@ export const mockDrivers = [
       }
     ],
     tripHistory: [
-      { id: "T-8802", route: "Dallas Terminal ➔ Houston Terminal", date: "Jul 11, 2026", status: "Completed", cargo: "Industrial Machinery" },
-      { id: "T-8741", route: "Houston Terminal ➔ San Antonio Depot", date: "Jul 08, 2026", status: "Completed", cargo: "Electronic Components" },
-      { id: "T-8650", route: "Austin Depot ➔ Dallas Terminal", date: "Jul 02, 2026", status: "Completed", cargo: "Auto Parts" }
+      { id: "T-8802", route: "Mumbai Terminal ➔ Pune Terminal", date: "Jul 11, 2026", status: "Completed", cargo: "Industrial Machinery" },
+      { id: "T-8741", route: "Pune Terminal ➔ Nashik Depot", date: "Jul 08, 2026", status: "Completed", cargo: "Electronic Components" },
+      { id: "T-8650", route: "Nashik Depot ➔ Mumbai Terminal", date: "Jul 02, 2026", status: "Completed", cargo: "Auto Parts" }
     ],
     safetyAnalytics: {
       hardBrakingEvents: 1,
@@ -66,23 +66,23 @@ export const mockDrivers = [
       incidentRate: "0.02 / 10k mi"
     },
     contactInfo: {
-      email: "marcus.sterling@transitops.com",
-      phone: "+1 (555) 123-4567",
-      address: "1428 Oakwood Dr, Houston, TX 77002",
-      emergencyContact: "Sarah Sterling (Wife)",
-      emergencyPhone: "+1 (555) 123-4568"
+      email: "amit.patel@transitops.com",
+      phone: "+91 98765 43210",
+      address: "Andheri West, Mumbai, MH",
+      emergencyContact: "Neha Patel (Wife)",
+      emergencyPhone: "+91 98765 43211"
     }
   },
   {
     id: "FL-11024",
-    name: "Elena Rodriguez",
+    name: "Shreya Goswami",
     role: "Transit Specialist",
     experience: "5 Years Experience",
-    status: "Suspended",
-    routeStatus: "Suspended",
-    avatarUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuA2ETnlIFBUgh4_syuNA4dHsD7Nvn5-SAUhQ1wz3xvwnsYRTQS-lA4pKBcoATq_TyvCSX4f3hMg2S4_bTTwXV_vsB5w3mYNnmUGCvj3HX9VaK93gcFdX5BPB5QkefQB3QIvW3QwgDUSn4VI-BiLjw_eSjqy49bwGeTAg9aFZhk5JK5GvduL39AzCNZrTpuUNexHDCR21s1qK7tdUFjh2uUBfidT5K6P_mwT_D6CsyrNfHk1Y8_6FiOl",
+    status: "On Duty",
+    routeStatus: "On Route",
+    avatarUrl: "https://api.dicebear.com/7.x/notionists/svg?seed=Aneka&backgroundColor=e63946",
     safetyScore: 78,
-    licenseExpiration: "02/2024",
+    licenseExpiration: "02/2026",
     licenseDetails: {
       documentNumber: "CDL-TX-4451-992",
       classType: "Class C (Commercial Passenger/Transit)",
@@ -93,11 +93,11 @@ export const mockDrivers = [
         { icon: "group", name: "Passenger (P)" }
       ]
     },
-    currentVehicle: "Transit Van (TX-5512) • Grounded",
+    currentVehicle: "Transit Van (MH-5512)",
     lastInspection: "Oct 05, 2023 (Pass)",
-    emergencyContact: "Roberto Rodriguez (Brother)",
+    emergencyContact: "Rohan Goswami (Brother)",
     currentLocation: {
-      description: "Grounded at Austin Depot",
+      description: "En-route: Pune Depot",
       speed: "0 mph",
       temp: "82°F",
       mapUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDXoes9M5y85vaev9IR2oEoesdC6k62itk9tV8eM4n3GJKpQjtmB7wDLaFmoW7bUx8w9kywjBflzrlX46aHrAIUY31rWl-g1PDgJGE5UYcSJWYMVU-Kaa7-_KBBEDmx-o7OdfkOuU3uvMFpeQWOh9NgFZKX37ll1yqnkKM2pi7g5FTVqOs9C2DsQrOuVRxYlwK7nROmiXkJ247BPc_YuhW39dTerQMM8UuuSdlRJ_vqQ8tLHcaumCiM"
@@ -105,10 +105,10 @@ export const mockDrivers = [
     safetyTimeline: [
       {
         id: "st-4",
-        title: "License Expiration Alert",
-        description: "CDL expired on Feb 09, 2024. Driver suspended pending renewal.",
+        title: "License Renewal Notice",
+        description: "CDL up for renewal in Feb 2026.",
         date: "Feb 10, 2024",
-        type: "error"
+        type: "warning"
       },
       {
         id: "st-5",
@@ -119,7 +119,7 @@ export const mockDrivers = [
       }
     ],
     tripHistory: [
-      { id: "T-8501", route: "Austin Depot ➔ Houston Terminal", date: "Feb 02, 2024", status: "Completed", cargo: "General Retail" }
+      { id: "T-8501", route: "Pune Depot ➔ Mumbai Terminal", date: "Feb 02, 2024", status: "Completed", cargo: "General Retail" }
     ],
     safetyAnalytics: {
       hardBrakingEvents: 8,
@@ -129,22 +129,22 @@ export const mockDrivers = [
       incidentRate: "0.18 / 10k mi"
     },
     contactInfo: {
-      email: "elena.rodriguez@transitops.com",
-      phone: "+1 (555) 234-5678",
-      address: "782 Pine St, Austin, TX 78701",
-      emergencyContact: "Roberto Rodriguez (Brother)",
-      emergencyPhone: "+1 (555) 234-5679"
+      email: "shreya.goswami@transitops.com",
+      phone: "+91 87654 32109",
+      address: "Kothrud, Pune, MH",
+      emergencyContact: "Rohan Goswami (Brother)",
+      emergencyPhone: "+91 87654 32110"
     }
   },
   {
     id: "FL-04289",
-    name: "Chen Wei",
+    name: "Martin Parmar",
     role: "Heavy Haul Expert",
     experience: "8 Years Experience",
-    status: "Off Duty",
-    routeStatus: "Off Duty",
-    avatarUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuBfsAlI7OpHxJhgWWlY1vBZER9lq8J7REJZpDGRLGBnk_LC7glCodDu2vdW0lZGXoqnn3cA77EH5oDPa5T7EoeP-g56TaQz0LSs68vZFhJD7ROTtyD3g9HyTKlmoHRAoYKv4vJY0ebMLZuV-C_4MhLkBOaFaxjx24XS8w1cEuHVfOGOsl_ESZDJqtVluaMAQMJ-gm4CJgXfJa1ZNUPeap82SKdWmL3bT8GOtgDVWmjh3DWnUpdSUM9c",
-    safetyScore: 92,
+    status: "Suspended",
+    routeStatus: "Suspended",
+    avatarUrl: "https://api.dicebear.com/7.x/notionists/svg?seed=Javier&backgroundColor=e63946",
+    safetyScore: 52,
     licenseExpiration: "08/2027",
     licenseDetails: {
       documentNumber: "CDL-TX-1092-482",
@@ -159,9 +159,9 @@ export const mockDrivers = [
     },
     currentVehicle: "Reefer Truck (TX-1182)",
     lastInspection: "Dec 01, 2023 (Pass)",
-    emergencyContact: "Lin Wei (Mother)",
+    emergencyContact: "Anjali Parmar (Mother)",
     currentLocation: {
-      description: "Resting: Dallas Depot",
+      description: "Grounded: Bengaluru Depot",
       speed: "0 mph",
       temp: "74°F",
       mapUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDXoes9M5y85vaev9IR2oEoesdC6k62itk9tV8eM4n3GJKpQjtmB7wDLaFmoW7bUx8w9kywjBflzrlX46aHrAIUY31rWl-g1PDgJGE5UYcSJWYMVU-Kaa7-_KBBEDmx-o7OdfkOuU3uvMFpeQWOh9NgFZKX37ll1yqnkKM2pi7g5FTVqOs9C2DsQrOuVRxYlwK7nROmiXkJ247BPc_YuhW39dTerQMM8UuuSdlRJ_vqQ8tLHcaumCiM"
@@ -183,8 +183,8 @@ export const mockDrivers = [
       }
     ],
     tripHistory: [
-      { id: "T-8799", route: "Fort Worth Depot ➔ Dallas Terminal", date: "Jul 10, 2026", status: "Completed", cargo: "Frozen Seafood" },
-      { id: "T-8692", route: "Houston Terminal ➔ Dallas Terminal", date: "Jul 05, 2026", status: "Completed", cargo: "Pharmaceuticals" }
+      { id: "T-8799", route: "Chennai Depot ➔ Bengaluru Terminal", date: "Jul 10, 2026", status: "Completed", cargo: "Frozen Seafood" },
+      { id: "T-8692", route: "Mumbai Terminal ➔ Bengaluru Terminal", date: "Jul 05, 2026", status: "Completed", cargo: "Pharmaceuticals" }
     ],
     safetyAnalytics: {
       hardBrakingEvents: 3,
@@ -194,21 +194,21 @@ export const mockDrivers = [
       incidentRate: "0.05 / 10k mi"
     },
     contactInfo: {
-      email: "chen.wei@transitops.com",
-      phone: "+1 (555) 345-6789",
-      address: "405 Blossom Ln, Plano, TX 75023",
-      emergencyContact: "Lin Wei (Mother)",
-      emergencyPhone: "+1 (555) 345-6780"
+      email: "martin.parmar@transitops.com",
+      phone: "+91 76543 21098",
+      address: "Navrangpura, Ahmedabad, GJ",
+      emergencyContact: "priyank Parmar (Wife)",
+      emergencyPhone: "+91 76543 21099"
     }
   },
   {
     id: "FL-09822",
-    name: "David Miller",
+    name: "Arjun Joshi",
     role: "Delivery Professional",
     experience: "6 Years Experience",
     status: "On Duty",
     routeStatus: "On Route",
-    avatarUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuD9nCQyOFwJaziHm_cb81BkCqypYrveKYxcp7PHuM7n72PB5slUaedykxp2CaUkMr8225IsKjwUDGritZrL_0pJgS3tBzb0GvjxA5236UstrfLiPSQV_KnQzg68mKXSIjg7wWayn17-wzcryRl1jI3UWw1dhqiWZfI4NMDxM6EfvKfdRPvVxCKz-8w-WjjLLWmVihUlYzG_PqiwEkaCqOiD4H82RGXXuupVLaBhdZZamPyDgIeFahdX",
+    avatarUrl: "https://api.dicebear.com/7.x/notionists/svg?seed=Nolan&backgroundColor=e63946",
     safetyScore: 95,
     licenseExpiration: "01/2026",
     licenseDetails: {
@@ -223,9 +223,9 @@ export const mockDrivers = [
     },
     currentVehicle: "Box Truck (TX-4401)",
     lastInspection: "Oct 28, 2023 (Pass)",
-    emergencyContact: "Jane Miller (Wife)",
+    emergencyContact: "Priyank Joshi (Wife)",
     currentLocation: {
-      description: "En-route: Galveston Port",
+      description: "En-route: Surat Port",
       speed: "55 mph",
       temp: "78°F",
       mapUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDXoes9M5y85vaev9IR2oEoesdC6k62itk9tV8eM4n3GJKpQjtmB7wDLaFmoW7bUx8w9kywjBflzrlX46aHrAIUY31rWl-g1PDgJGE5UYcSJWYMVU-Kaa7-_KBBEDmx-o7OdfkOuU3uvMFpeQWOh9NgFZKX37ll1yqnkKM2pi7g5FTVqOs9C2DsQrOuVRxYlwK7nROmiXkJ247BPc_YuhW39dTerQMMMM8UuuSdlRJ_vqQ8tLHcaumCiM"
@@ -240,7 +240,7 @@ export const mockDrivers = [
       }
     ],
     tripHistory: [
-      { id: "T-8801", route: "Houston Terminal ➔ Galveston Port", date: "Jul 11, 2026", status: "Completed", cargo: "Construction Materials" }
+      { id: "T-8801", route: "Mumbai Terminal ➔ Surat Port", date: "Jul 11, 2026", status: "Completed", cargo: "Construction Materials" }
     ],
     safetyAnalytics: {
       hardBrakingEvents: 2,
@@ -250,11 +250,11 @@ export const mockDrivers = [
       incidentRate: "0.08 / 10k mi"
     },
     contactInfo: {
-      email: "david.miller@transitops.com",
-      phone: "+1 (555) 456-7890",
-      address: "112 Westheimer Rd, Houston, TX 77056",
-      emergencyContact: "Jane Miller (Wife)",
-      emergencyPhone: "+1 (555) 456-7891"
+      email: "arjun.joshi@transitops.com",
+      phone: "+91 65432 10987",
+      address: "Indiranagar, Bangalore, KA",
+      emergencyContact: "Sunita Joshi (Mother)",
+      emergencyPhone: "+91 65432 10988"
     }
   }
 ];

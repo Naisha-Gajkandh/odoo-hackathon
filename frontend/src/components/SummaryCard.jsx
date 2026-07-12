@@ -2,10 +2,10 @@ import React from 'react';
 
 const SummaryCard = ({ reportType = 'Overview', _dateRange = 'This Month' }) => {
   const getFinancialSummaries = () => [
-    { title: 'Total Fuel Cost',    value: '$13,058', icon: 'local_gas_station', color: 'text-transit-blue bg-transit-blue-container' },
-    { title: 'Total Maintenance',  value: '$9,550',  icon: 'build',            color: 'text-success-green bg-success-green-container' },
-    { title: 'Total Driver Wages', value: '$10,600', icon: 'person',           color: 'text-warning-orange bg-warning-orange-container' },
-    { title: 'Total Tolls & Fees', value: '$2,592',  icon: 'payments',         color: 'text-error bg-error-container' }
+    { title: 'Total Fuel Cost',    value: '₹13,058', icon: 'local_gas_station', color: 'text-transit-blue bg-transit-blue-container' },
+    { title: 'Total Maintenance',  value: '₹9,550',  icon: 'build',            color: 'text-success-green bg-success-green-container' },
+    { title: 'Total Driver Wages', value: '₹10,600', icon: 'person',           color: 'text-warning-orange bg-warning-orange-container' },
+    { title: 'Total Tolls & Fees', value: '₹2,592',  icon: 'payments',         color: 'text-error bg-error-container' }
   ];
 
   const getFuelSummaries = () => [

@@ -56,8 +56,8 @@ const FuelExpenseCard = ({ card, onViewDetails }) => {
           ></div>
         </div>
         <div className="flex justify-between text-[9px] text-secondary font-bold">
-          <span>$0.00</span>
-          <span>${card.limit?.toLocaleString('en-US')}.00 Limit</span>
+          <span>₹0.00</span>
+          <span>₹{card.limit?.toLocaleString('en-US')}.00 Limit</span>
         </div>
       </div>
 
@@ -65,11 +65,11 @@ const FuelExpenseCard = ({ card, onViewDetails }) => {
       <div className="grid grid-cols-2 gap-4 pt-4 border-t border-border/40">
         <div className="space-y-0.5">
           <p className="text-[9px] font-bold text-secondary uppercase tracking-wider">Fuel Costs</p>
-          <p className="font-title-sm text-xs font-bold text-primary">${card.fuelCosts?.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+          <p className="font-title-sm text-xs font-bold text-primary">₹{card.fuelCosts?.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
         </div>
         <div className="space-y-0.5">
           <p className="text-[9px] font-bold text-secondary uppercase tracking-wider">Tolls & Fees</p>
-          <p className="font-title-sm text-xs font-bold text-primary">${card.tollsFees?.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
+          <p className="font-title-sm text-xs font-bold text-primary">₹{card.tollsFees?.toLocaleString('en-US', { minimumFractionDigits: 2 })}</p>
         </div>
       </div>
 

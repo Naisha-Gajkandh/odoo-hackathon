@@ -25,7 +25,7 @@ PERMISSION_MATRIX: dict[str, dict[str, str]] = {
         "dashboard": "read",
         "fleet": "full",
         "drivers": "full",
-        "trips": "read",
+        "trips": "full",
         "maintenance": "full",
         "fuel_exp": "read",
         "analytics": "full",

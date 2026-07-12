@@ -7,7 +7,7 @@ export const mockAnalyticsData = {
       {
         id: 'revenue',
         title: 'Weekly Revenue',
-        value: '$105,200',
+        value: '₹105,200',
         change: '+15%',
         trend: 'up',
         icon: 'payments',
@@ -45,7 +45,7 @@ export const mockAnalyticsData = {
       {
         id: 'revenue',
         title: 'Monthly Revenue',
-        value: '$452,000',
+        value: '₹452,000',
         change: '+8%',
         trend: 'up',
         icon: 'payments',
@@ -83,7 +83,7 @@ export const mockAnalyticsData = {
       {
         id: 'revenue',
         title: 'Monthly Revenue',
-        value: '$428,500',
+        value: '₹428,500',
         change: '12%',
         trend: 'up',
         icon: 'payments',
@@ -121,7 +121,7 @@ export const mockAnalyticsData = {
       {
         id: 'revenue',
         title: 'Quarterly Revenue',
-        value: '$1,280,000',
+        value: '₹1,280,000',
         change: '+18%',
         trend: 'up',
         icon: 'payments',
@@ -224,11 +224,11 @@ export const mockAnalyticsData = {
   // Detailed data tables for Financials and Fuel reports
   tables: {
     Financials: [
-      { vehicleId: 'TRK-8829', distance: '12,450 km', fuelCost: '$4,108', maintenance: '$5,250', tolls: '$1,092', driverWage: '$2,000', total: '$12,450' },
-      { vehicleId: 'TRK-2241', distance: '9,800 km', fuelCost: '$3,800', maintenance: '$1,900', tolls: '$700', driverWage: '$2,800', total: '$9,200' },
-      { vehicleId: 'VAN-9012', distance: '6,200 km', fuelCost: '$2,150', maintenance: '$400', tolls: '$100', driverWage: '$3,500', total: '$6,150' },
-      { vehicleId: 'TRK-5501', distance: '4,500 km', fuelCost: '$1,800', maintenance: '$900', tolls: '$600', driverWage: '$1,500', total: '$4,800' },
-      { vehicleId: 'VAN-1122', distance: '3,800 km', fuelCost: '$1,200', maintenance: '$1,100', tolls: '$100', driverWage: '$800', total: '$3,200' }
+      { vehicleId: 'TRK-8829', distance: '12,450 km', fuelCost: '₹4,108', maintenance: '₹5,250', tolls: '₹1,092', driverWage: '₹2,000', total: '₹12,450' },
+      { vehicleId: 'TRK-2241', distance: '9,800 km', fuelCost: '₹3,800', maintenance: '₹1,900', tolls: '₹700', driverWage: '₹2,800', total: '₹9,200' },
+      { vehicleId: 'VAN-9012', distance: '6,200 km', fuelCost: '₹2,150', maintenance: '₹400', tolls: '₹100', driverWage: '₹3,500', total: '₹6,150' },
+      { vehicleId: 'TRK-5501', distance: '4,500 km', fuelCost: '₹1,800', maintenance: '₹900', tolls: '₹600', driverWage: '₹1,500', total: '₹4,800' },
+      { vehicleId: 'VAN-1122', distance: '3,800 km', fuelCost: '₹1,200', maintenance: '₹1,100', tolls: '₹100', driverWage: '₹800', total: '₹3,200' }
     ],
     FuelEfficiency: [
       { vehicleId: 'TRK-8829', type: 'Class 8 Truck', distance: '12,450 km', fuelConsumed: '3,112 L', avgEfficiency: '25.0 L/100km', carbon: '8.1 tons', status: 'Optimal' },
