@@ -7,6 +7,7 @@ import VehicleRegistry from './pages/VehicleRegistry';
 import DriverManagement from './pages/DriverManagement';
 import Analytics from './pages/Analytics';
 import Maintenance from './pages/Maintenance';
+import FuelExpenses from './pages/FuelExpenses';
 import Login from './pages/Login';
 import './App.css';
 
@@ -42,7 +43,8 @@ function App() {
       menuName === 'Vehicle Registry' ||
       menuName === 'Driver Management' ||
       menuName === 'Reports' ||
-      menuName === 'Maintenance'
+      menuName === 'Maintenance' ||
+      menuName === 'Fuel & Expenses'
     ) {
       setActiveTab(menuName);
     } else {
@@ -93,6 +95,12 @@ function App() {
         breadcrumbs: ["Operations", "Maintenance"]
       };
     }
+    if (activeTab === 'Fuel & Expenses') {
+      return {
+        title: "Fuel & Expense Management",
+        breadcrumbs: ["Operations", "Financials"]
+      };
+    }
     return {
       title: "Trip Management",
       breadcrumbs: ["Operations", "Trips"]
@@ -134,6 +142,10 @@ function App() {
       ) : activeTab === 'Maintenance' ? (
         <Maintenance
           searchQuery={searchQuery}
+        />
+      ) : activeTab === 'Fuel & Expenses' ? (
+        <FuelExpenses 
+          searchQuery={searchQuery} 
         />
       ) : null}
 
