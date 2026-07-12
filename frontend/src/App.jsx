@@ -5,6 +5,8 @@ import PageLayout from './components/PageLayout';
 import TripDispatch from './pages/TripDispatch';
 import VehicleRegistry from './pages/VehicleRegistry';
 import DriverManagement from './pages/DriverManagement';
+import Analytics from './pages/Analytics';
+import Maintenance from './pages/Maintenance';
 import Login from './pages/Login';
 import './App.css';
 
@@ -36,9 +38,11 @@ function App() {
 
   const handleMenuSelect = (menuName) => {
     if (
-      menuName === 'Trip Management' || 
+      menuName === 'Trip Management' ||
       menuName === 'Vehicle Registry' ||
-      menuName === 'Driver Management'
+      menuName === 'Driver Management' ||
+      menuName === 'Reports' ||
+      menuName === 'Maintenance'
     ) {
       setActiveTab(menuName);
     } else {
@@ -77,6 +81,18 @@ function App() {
         breadcrumbs: ["Operations", "Drivers"]
       };
     }
+    if (activeTab === 'Reports') {
+      return {
+        title: "Reports & Analytics",
+        breadcrumbs: ["Operations", "Reports"]
+      };
+    }
+    if (activeTab === 'Maintenance') {
+      return {
+        title: "Maintenance Logs",
+        breadcrumbs: ["Operations", "Maintenance"]
+      };
+    }
     return {
       title: "Trip Management",
       breadcrumbs: ["Operations", "Trips"]
@@ -99,24 +115,32 @@ function App() {
     >
       {/* Main Active Page Component */}
       {activeTab === 'Trip Management' ? (
-        <TripDispatch 
-          searchQuery={searchQuery} 
-          currentRole={role} 
+        <TripDispatch
+          searchQuery={searchQuery}
+          currentRole={role}
         />
       ) : activeTab === 'Vehicle Registry' ? (
-        <VehicleRegistry 
-          searchQuery={searchQuery} 
+        <VehicleRegistry
+          searchQuery={searchQuery}
         />
       ) : activeTab === 'Driver Management' ? (
         <DriverManagement
           searchQuery={searchQuery}
         />
+      ) : activeTab === 'Reports' ? (
+        <Analytics
+          searchQuery={searchQuery}
+        />
+      ) : activeTab === 'Maintenance' ? (
+        <Maintenance
+          searchQuery={searchQuery}
+        />
       ) : null}
 
       {/* Toast Notification Container */}
-      <Toaster 
-        position="top-right" 
-        reverseOrder={false} 
+      <Toaster
+        position="top-right"
+        reverseOrder={false}
         toastOptions={{
           style: {
             fontFamily: 'Manrope, sans-serif',
