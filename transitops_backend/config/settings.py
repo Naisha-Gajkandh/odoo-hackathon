@@ -11,7 +11,6 @@ from __future__ import annotations
 from datetime import timedelta
 from pathlib import Path
 
-import dj_database_url
 from decouple import Csv, config
 
 # ── Paths ──────────────────────────────────────────────────────────────────────
@@ -83,13 +82,27 @@ WSGI_APPLICATION = "config.wsgi.application"
 ASGI_APPLICATION = "config.asgi.application"
 
 # ── Database ───────────────────────────────────────────────────────────────────
-# ── Database ───────────────────────────────────────────────────────────────────
-DATABASES = {
-    "default": dj_database_url.config(
-        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
-        conn_max_age=600,
-    )
-}
+# Default: SQLite (zero-config local dev). Set DB_ENGINE in .env for PostgreSQL.
+_db_engine = config("DB_ENGINE", default="django.db.backends.sqlite3")
+
+if _db_engine == "django.db.backends.sqlite3":
+    DATABASES = {
+        "default": {
+            "ENGINE": "django.db.backends.sqlite3",
+            "NAME": BASE_DIR / "db.sqlite3",
+        }
+    }
+else:
+    DATABASES = {
+        "default": {
+            "ENGINE": _db_engine,
+            "NAME": config("DB_NAME", default="transitops"),
+            "USER": config("DB_USER", default="postgres"),
+            "PASSWORD": config("DB_PASSWORD", default="postgres"),
+            "HOST": config("DB_HOST", default="localhost"),
+            "PORT": config("DB_PORT", default="5432"),
+        }
+    }
 
 # ── Password Validation ─────────────────────────────────────────────────────────
 AUTH_PASSWORD_VALIDATORS = [
