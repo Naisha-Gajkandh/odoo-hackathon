@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Toaster, toast } from 'react-hot-toast';
 import { authService } from './services/tripService';
 import PageLayout from './components/PageLayout';
+import Dashboard from './pages/Dashboard';
 import TripDispatch from './pages/TripDispatch';
 import VehicleRegistry from './pages/VehicleRegistry';
 import DriverManagement from './pages/DriverManagement';
@@ -16,7 +17,7 @@ function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [role, setRole] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeTab, setActiveTab] = useState('Trip Management');
+  const [activeTab, setActiveTab] = useState('Dashboard');
 
   // Check auth status on mount
   useEffect(() => {
@@ -40,6 +41,7 @@ function App() {
 
   const handleMenuSelect = (menuName) => {
     if (
+      menuName === 'Dashboard' ||
       menuName === 'Trip Management' ||
       menuName === 'Vehicle Registry' ||
       menuName === 'Driver Management' ||
@@ -73,6 +75,12 @@ function App() {
   }
 
   const getPageConfig = () => {
+    if (activeTab === 'Dashboard') {
+      return {
+        title: "Dashboard",
+        breadcrumbs: ["Operations", "Dashboard"]
+      };
+    }
     if (activeTab === 'Vehicle Registry') {
       return {
         title: "Vehicle Registry",
@@ -130,7 +138,11 @@ function App() {
       onMenuSelect={handleMenuSelect}
     >
       {/* Main Active Page Component */}
-      {activeTab === 'Trip Management' ? (
+      {activeTab === 'Dashboard' ? (
+        <Dashboard
+          searchQuery={searchQuery}
+        />
+      ) : activeTab === 'Trip Management' ? (
         <TripDispatch
           searchQuery={searchQuery}
           currentRole={role}
