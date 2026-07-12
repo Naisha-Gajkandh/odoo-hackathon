@@ -5,6 +5,7 @@ import PageLayout from './components/PageLayout';
 import TripDispatch from './pages/TripDispatch';
 import VehicleRegistry from './pages/VehicleRegistry';
 import DriverManagement from './pages/DriverManagement';
+import Analytics from './pages/Analytics';
 import Login from './pages/Login';
 import './App.css';
 
@@ -38,7 +39,8 @@ function App() {
     if (
       menuName === 'Trip Management' || 
       menuName === 'Vehicle Registry' ||
-      menuName === 'Driver Management'
+      menuName === 'Driver Management' ||
+      menuName === 'Reports'
     ) {
       setActiveTab(menuName);
     } else {
@@ -77,6 +79,12 @@ function App() {
         breadcrumbs: ["Operations", "Drivers"]
       };
     }
+    if (activeTab === 'Reports') {
+      return {
+        title: "Reports & Analytics",
+        breadcrumbs: ["Operations", "Reports"]
+      };
+    }
     return {
       title: "Trip Management",
       breadcrumbs: ["Operations", "Trips"]
@@ -109,6 +117,10 @@ function App() {
         />
       ) : activeTab === 'Driver Management' ? (
         <DriverManagement
+          searchQuery={searchQuery}
+        />
+      ) : activeTab === 'Reports' ? (
+        <Analytics
           searchQuery={searchQuery}
         />
       ) : null}
