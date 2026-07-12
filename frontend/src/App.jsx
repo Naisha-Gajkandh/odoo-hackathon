@@ -4,6 +4,7 @@ import { authService } from './services/tripService';
 import PageLayout from './components/PageLayout';
 import TripDispatch from './pages/TripDispatch';
 import VehicleRegistry from './pages/VehicleRegistry';
+import DriverManagement from './pages/DriverManagement';
 import Login from './pages/Login';
 import './App.css';
 
@@ -34,7 +35,11 @@ function App() {
   };
 
   const handleMenuSelect = (menuName) => {
-    if (menuName === 'Trip Management' || menuName === 'Vehicle Registry') {
+    if (
+      menuName === 'Trip Management' || 
+      menuName === 'Vehicle Registry' ||
+      menuName === 'Driver Management'
+    ) {
       setActiveTab(menuName);
     } else {
       toast(`Simulated view: ${menuName}`, {
@@ -66,6 +71,12 @@ function App() {
         breadcrumbs: ["Operations", "Vehicles"]
       };
     }
+    if (activeTab === 'Driver Management') {
+      return {
+        title: "Driver Management",
+        breadcrumbs: ["Operations", "Drivers"]
+      };
+    }
     return {
       title: "Trip Management",
       breadcrumbs: ["Operations", "Trips"]
@@ -92,11 +103,15 @@ function App() {
           searchQuery={searchQuery} 
           currentRole={role} 
         />
-      ) : (
+      ) : activeTab === 'Vehicle Registry' ? (
         <VehicleRegistry 
           searchQuery={searchQuery} 
         />
-      )}
+      ) : activeTab === 'Driver Management' ? (
+        <DriverManagement
+          searchQuery={searchQuery}
+        />
+      ) : null}
 
       {/* Toast Notification Container */}
       <Toaster 
