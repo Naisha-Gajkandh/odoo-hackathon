@@ -38,6 +38,7 @@ def _sum(qs, field: str) -> Decimal:
 
 # ── Per-vehicle calculations ───────────────────────────────────────────────────
 
+
 def vehicle_operational_cost(vehicle: Vehicle) -> Decimal:
     """Total Operational Cost per vehicle = Fuel + Maintenance (spec 3.7)."""
     fuel_cost = _sum(FuelLog.objects.filter(vehicle=vehicle), "cost")
@@ -58,6 +59,7 @@ def vehicle_roi(vehicle: Vehicle, revenue: Decimal) -> float:
 
 
 # ── Fleet-wide calculations ────────────────────────────────────────────────────
+
 
 def fleet_operational_cost() -> Decimal:
     """Total Operational Cost across the whole fleet (Fuel + Maintenance + Toll/Other)."""
@@ -120,20 +122,23 @@ def per_vehicle_roi_list() -> list[dict]:
     results = []
     for vehicle in Vehicle.objects.all():
         op_cost = vehicle_operational_cost(vehicle)
-        results.append({
-            "id": vehicle.pk,
-            "registration_number": vehicle.registration_number,
-            "name_model": vehicle.name_model,
-            "status": vehicle.status,
-            "acquisition_cost": float(vehicle.acquisition_cost),
-            "operational_cost": float(op_cost),
-            "odometer": vehicle.odometer,
-            "roi": vehicle_roi(vehicle, revenue=Decimal("0")),
-        })
+        results.append(
+            {
+                "id": vehicle.pk,
+                "registration_number": vehicle.registration_number,
+                "name_model": vehicle.name_model,
+                "status": vehicle.status,
+                "acquisition_cost": float(vehicle.acquisition_cost),
+                "operational_cost": float(op_cost),
+                "odometer": vehicle.odometer,
+                "roi": vehicle_roi(vehicle, revenue=Decimal("0")),
+            }
+        )
     return results
 
 
 # ── Dashboard KPIs ────────────────────────────────────────────────────────────
+
 
 def dashboard_kpis(cache_key: str = "dashboard_kpis") -> dict:
     """
@@ -170,6 +175,7 @@ def invalidate_dashboard_cache(cache_key: str = "dashboard_kpis") -> None:
 
 
 # ── ETA Engine ────────────────────────────────────────────────────────────────
+
 
 def eta_string(
     planned_distance_km: Decimal | float | None,

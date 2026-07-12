@@ -9,6 +9,7 @@ Automated State Hook (Module 5 backend requirement):
 Register this in maintenance/apps.py's ready() method so it's wired up
 automatically.
 """
+
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
@@ -33,9 +34,11 @@ def sync_vehicle_status_on_maintenance_save(sender, instance: MaintenanceRecord,
     elif instance.status == MaintenanceRecord.Status.CLOSED:
         # only restore to Available if no OTHER active maintenance record
         # exists for this vehicle (a vehicle could have overlapping jobs)
-        still_active = vehicle.maintenance_records.filter(
-            status=MaintenanceRecord.Status.ACTIVE
-        ).exclude(pk=instance.pk).exists()
+        still_active = (
+            vehicle.maintenance_records.filter(status=MaintenanceRecord.Status.ACTIVE)
+            .exclude(pk=instance.pk)
+            .exists()
+        )
 
         if not still_active and vehicle.status == Vehicle.Status.IN_SHOP:
             vehicle.status = Vehicle.Status.AVAILABLE

@@ -34,9 +34,13 @@ class DispatchableVehicleManager(models.Manager):
     """
 
     def get_queryset(self):
-        return super().get_queryset().filter(
-            is_deleted=False,
-            status=Vehicle.Status.AVAILABLE,
+        return (
+            super()
+            .get_queryset()
+            .filter(
+                is_deleted=False,
+                status=Vehicle.Status.AVAILABLE,
+            )
         )
 
 

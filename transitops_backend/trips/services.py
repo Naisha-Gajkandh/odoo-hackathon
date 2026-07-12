@@ -7,6 +7,7 @@ these functions. Every function is wrapped in transaction.atomic() so a
 crash mid-way never leaves, e.g., a vehicle stuck as "On Trip" with no
 trip actually pointing at it (the classic bug in this kind of system).
 """
+
 from django.db import transaction
 
 from core.exceptions import BusinessRuleError
@@ -29,11 +30,13 @@ def dispatch_trip(trip: Trip) -> Trip:
         raise BusinessRuleError(f"Driver {driver.name} is not eligible for assignment.")
     if trip.cargo_weight_kg > vehicle.max_load_capacity_kg:
         overage = trip.cargo_weight_kg - vehicle.max_load_capacity_kg
-        raise BusinessRuleError([
-            f"Vehicle Capacity: {vehicle.max_load_capacity_kg:g} kg",
-            f"Cargo Weight: {trip.cargo_weight_kg:g} kg",
-            f"Capacity exceeded by {overage:g} kg - dispatch blocked.",
-        ])
+        raise BusinessRuleError(
+            [
+                f"Vehicle Capacity: {vehicle.max_load_capacity_kg:g} kg",
+                f"Cargo Weight: {trip.cargo_weight_kg:g} kg",
+                f"Capacity exceeded by {overage:g} kg - dispatch blocked.",
+            ]
+        )
 
     trip.dispatch()  # FSM transition: Draft -> Dispatched
     trip.save()

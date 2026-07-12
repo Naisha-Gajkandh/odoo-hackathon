@@ -5,50 +5,77 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Driver',
+            name="Driver",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_deleted', models.BooleanField(default=False)),
-                ('deleted_at', models.DateTimeField(blank=True, null=True)),
-                ('name', models.CharField(max_length=128)),
-                ('license_number', models.CharField(max_length=32, unique=True)),
-                ('license_category', models.CharField(max_length=16)),
-                ('license_expiry_date', models.DateField()),
-                ('contact_number', models.CharField(max_length=20)),
-                ('safety_score', models.DecimalField(decimal_places=2, default=100, max_digits=5)),
-                ('status', models.CharField(choices=[('Available', 'Available'), ('On Trip', 'On Trip'), ('Off Duty', 'Off Duty'), ('Suspended', 'Suspended')], default='Available', max_length=16)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_deleted", models.BooleanField(default=False)),
+                ("deleted_at", models.DateTimeField(blank=True, null=True)),
+                ("name", models.CharField(max_length=128)),
+                ("license_number", models.CharField(max_length=32, unique=True)),
+                ("license_category", models.CharField(max_length=16)),
+                ("license_expiry_date", models.DateField()),
+                ("contact_number", models.CharField(max_length=20)),
+                ("safety_score", models.DecimalField(decimal_places=2, default=100, max_digits=5)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("Available", "Available"),
+                            ("On Trip", "On Trip"),
+                            ("Off Duty", "Off Duty"),
+                            ("Suspended", "Suspended"),
+                        ],
+                        default="Available",
+                        max_length=16,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-updated_at'],
-                'abstract': False,
+                "ordering": ["-updated_at"],
+                "abstract": False,
             },
         ),
         migrations.CreateModel(
-            name='SafetyEvent',
+            name="SafetyEvent",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_deleted', models.BooleanField(default=False)),
-                ('deleted_at', models.DateTimeField(blank=True, null=True)),
-                ('event_type', models.CharField(max_length=64)),
-                ('score_delta', models.DecimalField(decimal_places=2, max_digits=5)),
-                ('recorded_at', models.DateTimeField(auto_now_add=True)),
-                ('driver', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='safety_events', to='drivers.driver')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_deleted", models.BooleanField(default=False)),
+                ("deleted_at", models.DateTimeField(blank=True, null=True)),
+                ("event_type", models.CharField(max_length=64)),
+                ("score_delta", models.DecimalField(decimal_places=2, max_digits=5)),
+                ("recorded_at", models.DateTimeField(auto_now_add=True)),
+                (
+                    "driver",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="safety_events",
+                        to="drivers.driver",
+                    ),
+                ),
             ],
             options={
-                'ordering': ['-updated_at'],
-                'abstract': False,
+                "ordering": ["-updated_at"],
+                "abstract": False,
             },
         ),
     ]

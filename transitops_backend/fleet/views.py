@@ -31,7 +31,11 @@ class VehicleViewSet(viewsets.ModelViewSet):
     filterset_fields = ["status", "vehicle_type", "region"]
     search_fields = ["registration_number", "name_model", "vehicle_type"]
     ordering_fields = [
-        "registration_number", "name_model", "odometer", "acquisition_cost", "updated_at"
+        "registration_number",
+        "name_model",
+        "odometer",
+        "acquisition_cost",
+        "updated_at",
     ]
     ordering = ["-updated_at"]
     filter_backends = [*viewsets.ModelViewSet.filter_backends, SearchFilter, OrderingFilter]

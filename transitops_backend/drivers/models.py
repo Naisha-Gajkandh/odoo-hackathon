@@ -103,7 +103,6 @@ def recalculate_safety_score(driver: Driver, window=50):
 
     if avg is not None:
         score = round(float(avg), 2)
-
         score = max(0, min(score, 100))
 
         driver.safety_score = score

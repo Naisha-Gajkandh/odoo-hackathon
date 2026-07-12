@@ -18,6 +18,7 @@ class GoogleLoginView(APIView):
     Body: {"id_token": "<token from Google Identity Services>", "role": "Dispatcher"}
     `role` is only required the FIRST time a given Google account logs in.
     """
+
     permission_classes = [AllowAny]
     throttle_scope = "login"
 
