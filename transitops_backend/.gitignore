@@ -1,0 +1,17 @@
+venv/
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+db.sqlite3
+.env
+staticfiles/
+*.log
+.DS_Store
+Thumbs.db
+*.egg-info/
+dist/
+build/
+.pytest_cache/
+.ruff_cache/
