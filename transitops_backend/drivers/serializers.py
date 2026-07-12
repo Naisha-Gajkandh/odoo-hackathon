@@ -1,11 +1,10 @@
 """
-drivers/serializers.py
+Driver serializer.
 
-Driver serializer with:
-- `license_expired` computed field (read-only, booleanf)
-- `is_assignable` computed field (read-only, boolean) — lets the frontend
-  disable a driver in the dropdown without an extra API call
-- status and safety_score are read-only (changed only via business logic)
+Provides:
+- license_expired computed field
+- is_assignable computed field
+- read-only status and safety_score
 """
 
 from __future__ import annotations
@@ -17,10 +16,12 @@ from .models import Driver
 
 class DriverSerializer(serializers.ModelSerializer):
     license_expired = serializers.BooleanField(read_only=True)
-    is_assignable = serializers.SerializerMethodField()
+
+    is_assignable = serializers.BooleanField(read_only=True)
 
     class Meta:
         model = Driver
+
         fields = [
             "id",
             "name",
@@ -35,7 +36,12 @@ class DriverSerializer(serializers.ModelSerializer):
             "created_at",
             "updated_at",
         ]
-        read_only_fields = ["status", "safety_score"]
 
-    def get_is_assignable(self, obj: Driver) -> bool:
-        return obj.is_assignable()
+        read_only_fields = [
+            "status",
+            "safety_score",
+            "license_expired",
+            "is_assignable",
+            "created_at",
+            "updated_at",
+        ]
