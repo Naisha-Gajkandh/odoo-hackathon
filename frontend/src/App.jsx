@@ -8,6 +8,7 @@ import DriverManagement from './pages/DriverManagement';
 import Analytics from './pages/Analytics';
 import Maintenance from './pages/Maintenance';
 import FuelExpenses from './pages/FuelExpenses';
+import Settings from './pages/Settings';
 import Login from './pages/Login';
 import './App.css';
 
@@ -44,7 +45,8 @@ function App() {
       menuName === 'Driver Management' ||
       menuName === 'Reports' ||
       menuName === 'Maintenance' ||
-      menuName === 'Fuel & Expenses'
+      menuName === 'Fuel & Expenses' ||
+      menuName === 'Settings'
     ) {
       setActiveTab(menuName);
     } else {
@@ -101,6 +103,12 @@ function App() {
         breadcrumbs: ["Operations", "Financials"]
       };
     }
+    if (activeTab === 'Settings') {
+      return {
+        title: "System Controls",
+        breadcrumbs: ["System", "Settings", "System Controls"]
+      };
+    }
     return {
       title: "Trip Management",
       breadcrumbs: ["Operations", "Trips"]
@@ -146,6 +154,10 @@ function App() {
       ) : activeTab === 'Fuel & Expenses' ? (
         <FuelExpenses 
           searchQuery={searchQuery} 
+        />
+      ) : activeTab === 'Settings' ? (
+        <Settings
+          searchQuery={searchQuery}
         />
       ) : null}
 
