@@ -88,3 +88,49 @@ def cancel_trip(trip: Trip) -> Trip:
     driver.save(update_fields=["status"])
 
     return trip
+
+
+@transaction.atomic
+def reject_trip(trip: Trip) -> Trip:
+    vehicle = Vehicle.objects.select_for_update().get(pk=trip.vehicle_id)
+    driver = Driver.objects.select_for_update().get(pk=trip.driver_id)
+
+    # If currently Dispatched, move to In-Transit first before rejecting
+    if trip.status == Trip.Status.DISPATCHED:
+        trip.start_transit()
+        trip.save()
+
+    trip.reject_delivery()  # FSM transition: In-Transit -> Rejected
+    trip.save()
+
+    # Releasing driver and vehicle
+    vehicle.status = Vehicle.Status.AVAILABLE
+    vehicle.save(update_fields=["status"])
+
+    driver.status = Driver.Status.AVAILABLE
+    driver.save(update_fields=["status"])
+
+    return trip
+
+
+@transaction.atomic
+def return_damaged_trip(trip: Trip) -> Trip:
+    vehicle = Vehicle.objects.select_for_update().get(pk=trip.vehicle_id)
+    driver = Driver.objects.select_for_update().get(pk=trip.driver_id)
+
+    # If currently Dispatched, move to In-Transit first before returning
+    if trip.status == Trip.Status.DISPATCHED:
+        trip.start_transit()
+        trip.save()
+
+    trip.return_damaged()  # FSM transition: In-Transit -> Returned
+    trip.save()
+
+    # Releasing driver and vehicle
+    vehicle.status = Vehicle.Status.AVAILABLE
+    vehicle.save(update_fields=["status"])
+
+    driver.status = Driver.Status.AVAILABLE
+    driver.save(update_fields=["status"])
+
+    return trip
