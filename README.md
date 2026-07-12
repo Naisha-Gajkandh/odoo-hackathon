@@ -4,7 +4,7 @@ TransitOps is a modern, comprehensive Fleet and Logistics Management System buil
 
 The application is built with a decoupled architecture featuring a **React** frontend and a **Django REST Framework (DRF)** backend, providing a scalable and responsive experience for logistics operators, fleet managers, and dispatchers.
 
-## 🚀 Key Features
+## Key Features
 
 *   **Role-Based Access Control (RBAC):** Distinct dashboards and access levels for Fleet Managers, Dispatchers, Safety Officers, and Financial Analysts.
 *   **Live Trip Dispatching:** Create, assign, and track trips. Automatically calculate cargo weight limits and display route ETA using OSRM routing fallbacks.
@@ -77,7 +77,7 @@ npm run dev
 ```
 *The frontend will be available at `http://localhost:5173`*
 
-## 🧑‍💻 Usage
+##  Usage
 
 1. Open your browser and navigate to the frontend URL (e.g., `http://localhost:5173`).
 2. Log in using one of the preset roles on the Login screen (e.g., Fleet Manager).
