@@ -27,12 +27,10 @@ from accounts.views import GoogleLoginView, LoginView
 urlpatterns = [
     # ── Django Admin ──────────────────────────────────────────────────────────
     path("admin/", admin.site.urls),
-
     # ── Authentication ────────────────────────────────────────────────────────
     path("api/auth/login/", LoginView.as_view(), name="login"),
     path("api/auth/google/", GoogleLoginView.as_view(), name="google-login"),
     path("api/auth/refresh/", TokenRefreshView.as_view(), name="token-refresh"),
-
     # ── Feature Apps (each owns its own urls.py + DRF router) ─────────────────
     path("api/fleet/", include("fleet.urls")),
     path("api/drivers/", include("drivers.urls")),
@@ -40,7 +38,6 @@ urlpatterns = [
     path("api/maintenance/", include("maintenance.urls")),
     path("api/finance/", include("finance.urls")),
     path("api/analytics/", include("analytics.urls")),
-
     # ── OpenAPI / Swagger ─────────────────────────────────────────────────────
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path(

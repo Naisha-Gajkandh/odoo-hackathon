@@ -17,6 +17,7 @@ anywhere in the codebase (serializers, services, signals) and this single
 exception handler formats it consistently. Wire it in settings.py via
 REST_FRAMEWORK["EXCEPTION_HANDLER"].
 """
+
 from rest_framework import status
 from rest_framework.exceptions import ValidationError
 from rest_framework.response import Response
@@ -48,7 +49,7 @@ def custom_exception_handler(exc, context):
         detail = exc.detail
         if isinstance(detail, dict):
             for field, msgs in detail.items():
-                for m in (msgs if isinstance(msgs, list) else [msgs]):
+                for m in msgs if isinstance(msgs, list) else [msgs]:
                     errors.append(f"{field}: {m}")
         elif isinstance(detail, list):
             errors = [str(m) for m in detail]

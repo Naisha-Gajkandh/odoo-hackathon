@@ -5,35 +5,53 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Vehicle',
+            name="Vehicle",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('created_at', models.DateTimeField(auto_now_add=True)),
-                ('updated_at', models.DateTimeField(auto_now=True)),
-                ('is_deleted', models.BooleanField(default=False)),
-                ('deleted_at', models.DateTimeField(blank=True, null=True)),
-                ('registration_number', models.CharField(db_index=True, max_length=32, unique=True)),
-                ('name_model', models.CharField(max_length=128)),
-                ('vehicle_type', models.CharField(max_length=64)),
-                ('max_load_capacity_kg', models.DecimalField(decimal_places=2, max_digits=10)),
-                ('odometer', models.PositiveIntegerField(default=0)),
-                ('acquisition_cost', models.DecimalField(decimal_places=2, max_digits=14)),
-                ('status', models.CharField(choices=[('Available', 'Available'), ('On Trip', 'On Trip'), ('In Shop', 'In Shop'), ('Retired', 'Retired')], default='Available', max_length=16)),
-                ('region', models.CharField(blank=True, default='', max_length=64)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True, primary_key=True, serialize=False, verbose_name="ID"
+                    ),
+                ),
+                ("created_at", models.DateTimeField(auto_now_add=True)),
+                ("updated_at", models.DateTimeField(auto_now=True)),
+                ("is_deleted", models.BooleanField(default=False)),
+                ("deleted_at", models.DateTimeField(blank=True, null=True)),
+                (
+                    "registration_number",
+                    models.CharField(db_index=True, max_length=32, unique=True),
+                ),
+                ("name_model", models.CharField(max_length=128)),
+                ("vehicle_type", models.CharField(max_length=64)),
+                ("max_load_capacity_kg", models.DecimalField(decimal_places=2, max_digits=10)),
+                ("odometer", models.PositiveIntegerField(default=0)),
+                ("acquisition_cost", models.DecimalField(decimal_places=2, max_digits=14)),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("Available", "Available"),
+                            ("On Trip", "On Trip"),
+                            ("In Shop", "In Shop"),
+                            ("Retired", "Retired"),
+                        ],
+                        default="Available",
+                        max_length=16,
+                    ),
+                ),
+                ("region", models.CharField(blank=True, default="", max_length=64)),
             ],
             options={
-                'ordering': ['-updated_at'],
+                "ordering": ["-updated_at"],
             },
             managers=[
-                ('dispatchable', django.db.models.manager.Manager()),
+                ("dispatchable", django.db.models.manager.Manager()),
             ],
         ),
     ]

@@ -29,6 +29,7 @@ class Expense(BaseModel):
 
     def clean(self):
         from core.exceptions import BusinessRuleError
+
         # Business rule (Module 6): expenses linked to a trip must
         # reference a valid, active (non-cancelled) trip record.
         if self.trip and self.trip.status == Trip.Status.CANCELLED:

@@ -5,20 +5,43 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('trips', '0001_initial'),
+        ("trips", "0001_initial"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='trip',
-            name='trip_type',
-            field=models.CharField(choices=[('Delivery', 'Standard Delivery'), ('Rejected Delivery', 'Customer Rejected Delivery'), ('Damaged Return', 'Damaged Goods Returned'), ('Reverse Logistics', 'Reverse Logistics'), ('Empty Return', 'Empty Vehicle Return'), ('Warehouse Transfer', 'Warehouse-to-Warehouse Transfer')], default='Delivery', max_length=32),
+            model_name="trip",
+            name="trip_type",
+            field=models.CharField(
+                choices=[
+                    ("Delivery", "Standard Delivery"),
+                    ("Rejected Delivery", "Customer Rejected Delivery"),
+                    ("Damaged Return", "Damaged Goods Returned"),
+                    ("Reverse Logistics", "Reverse Logistics"),
+                    ("Empty Return", "Empty Vehicle Return"),
+                    ("Warehouse Transfer", "Warehouse-to-Warehouse Transfer"),
+                ],
+                default="Delivery",
+                max_length=32,
+            ),
         ),
         migrations.AlterField(
-            model_name='trip',
-            name='status',
-            field=django_fsm.FSMField(choices=[('Draft', 'Draft'), ('Dispatched', 'Dispatched'), ('In-Transit', 'In-Transit'), ('Completed', 'Completed'), ('Cancelled', 'Cancelled'), ('Rejected', 'Rejected'), ('Returned', 'Returned')], default='Draft', max_length=50, protected=True),
+            model_name="trip",
+            name="status",
+            field=django_fsm.FSMField(
+                choices=[
+                    ("Draft", "Draft"),
+                    ("Dispatched", "Dispatched"),
+                    ("In-Transit", "In-Transit"),
+                    ("Completed", "Completed"),
+                    ("Cancelled", "Cancelled"),
+                    ("Rejected", "Rejected"),
+                    ("Returned", "Returned"),
+                ],
+                default="Draft",
+                max_length=50,
+                protected=True,
+            ),
         ),
     ]

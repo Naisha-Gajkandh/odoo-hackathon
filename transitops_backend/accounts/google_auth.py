@@ -19,6 +19,7 @@ Role handling for hackathon speed:
     and we create the account with that role. In a REAL product you'd
     gate this behind admin approval -- flagged below.
 """
+
 from django.conf import settings
 from django.contrib.auth import get_user_model
 from google.auth.transport import requests as google_requests
