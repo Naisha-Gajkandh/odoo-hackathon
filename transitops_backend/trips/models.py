@@ -27,6 +27,8 @@ class Trip(BaseModel):
         IN_TRANSIT = "In-Transit"
         COMPLETED = "Completed"
         CANCELLED = "Cancelled"
+        REJECTED = "Rejected"
+        RETURNED = "Returned"
 
     STATUS_CHOICES = [
         (Status.DRAFT, "Draft"),
@@ -34,12 +36,27 @@ class Trip(BaseModel):
         (Status.IN_TRANSIT, "In-Transit"),
         (Status.COMPLETED, "Completed"),
         (Status.CANCELLED, "Cancelled"),
+        (Status.REJECTED, "Rejected"),
+        (Status.RETURNED, "Returned"),
     ]
+
+    class TripType(models.TextChoices):
+        DELIVERY = "Delivery", "Standard Delivery"
+        REJECTED_DELIVERY = "Rejected Delivery", "Customer Rejected Delivery"
+        DAMAGED_RETURN = "Damaged Return", "Damaged Goods Returned"
+        REVERSE_LOGISTICS = "Reverse Logistics", "Reverse Logistics"
+        EMPTY_RETURN = "Empty Return", "Empty Vehicle Return"
+        WAREHOUSE_TRANSFER = "Warehouse Transfer", "Warehouse-to-Warehouse Transfer"
 
     ROUTING_SOURCE_MANUAL = "manual"
     ROUTING_SOURCE_OSRM = "osrm"
 
     trip_code = models.CharField(max_length=16, unique=True, db_index=True)
+    trip_type = models.CharField(
+        max_length=32,
+        choices=TripType.choices,
+        default=TripType.DELIVERY,
+    )
     source = models.CharField(max_length=128)
     destination = models.CharField(max_length=128)
     vehicle = models.ForeignKey(
@@ -102,4 +119,20 @@ class Trip(BaseModel):
         target=Status.CANCELLED,
     )
     def cancel(self) -> None:
+        pass
+
+    @transition(
+        field=status,
+        source=[Status.DISPATCHED, Status.IN_TRANSIT],
+        target=Status.REJECTED,
+    )
+    def reject_delivery(self) -> None:
+        pass
+
+    @transition(
+        field=status,
+        source=[Status.DISPATCHED, Status.IN_TRANSIT],
+        target=Status.RETURNED,
+    )
+    def return_damaged(self) -> None:
         pass
