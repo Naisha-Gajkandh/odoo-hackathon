@@ -41,6 +41,7 @@ class TripCreateSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "trip_code",
+            "trip_type",
             "source",
             "destination",
             "vehicle",
@@ -67,6 +68,11 @@ class TripCreateSerializer(serializers.ModelSerializer):
         vehicle: Vehicle | None = attrs.get("vehicle")
         driver: Driver | None = attrs.get("driver")
         cargo_weight = attrs.get("cargo_weight_kg")
+        trip_type = attrs.get("trip_type", Trip.TripType.DELIVERY)
+
+        # ── 0. Empty Return Validation ───────────────────────────────────────
+        if trip_type == Trip.TripType.EMPTY_RETURN and cargo_weight and cargo_weight > 0:
+            errors.append("Empty Return trips must have a cargo weight of 0 kg.")
 
         # ── 1. Cargo Overload Guard ──────────────────────────────────────────
         # Returns the EXACT structured error array required by the spec:
