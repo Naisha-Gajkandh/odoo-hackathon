@@ -56,8 +56,8 @@ class TripViewSet(viewsets.ModelViewSet):
         instance.save(update_fields=["trip_code"])
 
     # ── POST /api/trips/{id}/dispatch/ ─────────────────────────────────────────
-    @action(detail=True, methods=["post"])
-    def dispatch(self, request: Request, pk=None) -> Response:
+    @action(detail=True, methods=["post"], url_path="dispatch")
+    def trigger_dispatch(self, request: Request, pk=None) -> Response:
         """
         Dispatch a Draft trip.
 
@@ -144,3 +144,27 @@ class TripViewSet(viewsets.ModelViewSet):
             "planned_distance_km": float(trip.planned_distance_km),
             "estimated_duration_seconds": trip.estimated_duration_seconds,
         })
+
+    # ── POST /api/trips/{id}/reject/ ───────────────────────────────────────────
+    @action(detail=True, methods=["post"])
+    def reject(self, request: Request, pk=None) -> Response:
+        """
+        Mark a trip as Customer Rejected Delivery.
+
+        Restores both vehicle.status and driver.status to Available.
+        """
+        trip = self.get_object()
+        trip = services.reject_trip(trip)
+        return Response(TripCreateSerializer(trip).data, status=status.HTTP_200_OK)
+
+    # ── POST /api/trips/{id}/return-damaged/ ───────────────────────────────────
+    @action(detail=True, methods=["post"])
+    def return_damaged(self, request: Request, pk=None) -> Response:
+        """
+        Mark a trip as Damaged Goods Returned.
+
+        Restores both vehicle.status and driver.status to Available.
+        """
+        trip = self.get_object()
+        trip = services.return_damaged_trip(trip)
+        return Response(TripCreateSerializer(trip).data, status=status.HTTP_200_OK)

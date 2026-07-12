@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TransitOps - Trip Dispatch Console</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "tertiary-fixed-dim": "#c4c7ca",
+                        "tertiary": "#000000",
+                        "inverse-primary": "#c8c6c5",
+                        "tertiary-container": "#191c1f",
+                        "on-surface-variant": "#444748",
+                        "tertiary-fixed": "#e0e2e6",
+                        "on-surface": "#191c1d",
+                        "on-secondary-fixed-variant": "#464747",
+                        "on-primary-container": "#858383",
+                        "on-primary": "#ffffff",
+                        "primary-fixed": "#e5e2e1",
+                        "surface-container-lowest": "#ffffff",
+                        "outline": "#747878",
+                        "surface-dim": "#d9dadb",
+                        "surface-container": "#edeeef",
+                        "error": "#ba1a1a",
+                        "surface-variant": "#e1e3e4",
+                        "outline-variant": "#c4c7c7",
+                        "secondary-fixed-dim": "#c7c6c6",
+                        "on-error": "#ffffff",
+                        "secondary-container": "#e1dfdf",
+                        "on-secondary-container": "#626262",
+                        "on-background": "#191c1d",
+                        "surface": "#f8f9fa",
+                        "inverse-on-surface": "#f0f1f2",
+                        "secondary": "#5e5e5e",
+                        "surface-container-high": "#e7e8e9",
+                        "surface-container-low": "#f3f4f5",
+                        "primary": "#000000",
+                        "primary-container": "#1c1b1b",
+                        "on-secondary": "#ffffff",
+                        "on-primary-fixed-variant": "#474646",
+                        "on-primary-fixed": "#1c1b1b",
+                        "surface-bright": "#f8f9fa",
+                        "on-tertiary": "#ffffff",
+                        "primary-fixed-dim": "#c8c6c5",
+                        "secondary-fixed": "#e4e2e2",
+                        "on-tertiary-fixed": "#191c1f",
+                        "surface-tint": "#5f5e5e",
+                        "surface-container-highest": "#e1e3e4",
+                        "on-secondary-fixed": "#1b1c1c",
+                        "on-error-container": "#93000a",
+                        "background": "#f8f9fa",
+                        "inverse-surface": "#2e3132",
+                        "on-tertiary-container": "#818488",
+                        "error-container": "#ffdad6",
+                        "on-tertiary-fixed-variant": "#44474a"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "container-padding": "24px",
+                        "margin-sm": "8px",
+                        "margin-lg": "32px",
+                        "gutter": "16px",
+                        "base-unit": "4px",
+                        "margin-md": "16px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Manrope"],
+                        "headline-md": ["Manrope"],
+                        "headline-lg": ["Manrope"],
+                        "label-md": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .dashed-line {
+            background-image: linear-gradient(to bottom, #d1d5db 50%, transparent 50%);
+            background-size: 1px 8px;
+            background-repeat: repeat-y;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background font-body-md text-body-md overflow-hidden">
+<!-- SIDEBAR RAIL (Component: SideNavBar Mapping) -->
+<aside class="fixed left-0 top-0 h-screen w-20 flex flex-col items-center py-6 gap-4 bg-surface border-r border-outline-variant z-50">
+<div class="mb-8">
+<span class="font-headline-md text-headline-md font-black text-primary">T</span>
+</div>
+<nav class="flex flex-col gap-6 items-center flex-1">
+<button class="w-12 h-12 flex items-center justify-center hover:bg-surface-container-high transition-colors duration-200 text-secondary" title="Dashboard">
+<span class="material-symbols-outlined">dashboard</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center bg-primary text-on-primary rounded-lg active:scale-95 transition-transform" title="Trips">
+<span class="material-symbols-outlined">route</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center hover:bg-surface-container-high transition-colors duration-200 text-secondary" title="Fleet">
+<span class="material-symbols-outlined">local_shipping</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center hover:bg-surface-container-high transition-colors duration-200 text-secondary" title="Drivers">
+<span class="material-symbols-outlined">person</span>
+</button>
+<button class="w-12 h-12 flex items-center justify-center hover:bg-surface-container-high transition-colors duration-200 text-secondary" title="Analytics">
+<span class="material-symbols-outlined">analytics</span>
+</button>
+</nav>
+<div class="flex flex-col gap-6 items-center">
+<button class="w-12 h-12 flex items-center justify-center hover:bg-surface-container-high transition-colors duration-200 text-secondary" title="Settings">
+<span class="material-symbols-outlined">settings</span>
+</button>
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center overflow-hidden">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a logistics operations manager in a high-contrast black and white office environment. The person has a focused expression, wearing a minimalist dark turtleneck, positioned against a soft-focus background of high-tech monitoring screens." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtlXpImn4B2hQxA0A3_V9kkXPEvJ_0yE22RDB-6YO9swd8l2QhWoCZ_ezbzfcUGKLsw7dRQu8kZ0gQQwzAfaiJ01YuU-G5HJB4qWLdQn1d4sdGyv6fNLGbTtD4Mv3IBmZxKoDHrnKVg-hZf8MXAL9VHWs5CEbnZR_cXbuTk7Z_MTp04RHpwcaX-YnCSzZwrILBT5yabO_rX9P9HAhdjlx_xhkpv9twxMD6tmMtREOHN5P1CE1IQieb"/>
+</div>
+</div>
+</aside>
+<!-- TOP BAR (Component: TopAppBar Mapping) -->
+<header class="fixed top-0 right-0 left-20 h-16 bg-surface border-b border-outline-variant flex items-center justify-between px-margin-lg z-40">
+<div class="flex items-center gap-4">
+<h1 class="font-headline-md text-headline-md font-black text-primary">Trip Dispatch</h1>
+<div class="h-6 w-[1px] bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-2 text-secondary font-label-md">
+<span class="material-symbols-outlined text-[18px]">hub</span>
+<span>Console v5.4</span>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="relative focus-within:ring-2 focus-within:ring-primary rounded-lg bg-surface-container-low px-4 py-2 flex items-center gap-2 w-64 border border-outline-variant transition-all">
+<span class="material-symbols-outlined text-secondary">search</span>
+<input class="bg-transparent border-none focus:ring-0 p-0 text-sm w-full" placeholder="Search trips or IDs..." type="text"/>
+</div>
+<button class="relative hover:bg-surface-container-low p-2 rounded-full transition-colors text-secondary">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="hover:bg-surface-container-low p-2 rounded-full transition-colors text-secondary">
+<span class="material-symbols-outlined">help</span>
+</button>
+</div>
+</header>
+<!-- MAIN CONSOLE CONTENT -->
+<main class="ml-20 mt-16 h-[calc(100vh-64px)] flex overflow-hidden">
+<!-- LEFT PANEL: LIVE BOARD (~30%) -->
+<section class="w-[320px] lg:w-[380px] flex-shrink-0 bg-white border-r border-outline-variant flex flex-col">
+<div class="p-6 border-b border-outline-variant">
+<div class="flex items-center justify-between mb-4">
+<h2 class="font-headline-md text-headline-md text-primary">Live Board</h2>
+<span class="bg-surface-container-high px-2 py-1 rounded text-[10px] font-bold tracking-widest uppercase">Real-Time</span>
+</div>
+<div class="flex gap-2">
+<button class="bg-primary text-on-primary text-[11px] px-3 py-1.5 rounded-full font-bold">ALL</button>
+<button class="bg-surface-container text-secondary text-[11px] px-3 py-1.5 rounded-full font-bold hover:bg-surface-container-high">ACTIVE</button>
+<button class="bg-surface-container text-secondary text-[11px] px-3 py-1.5 rounded-full font-bold hover:bg-surface-container-high">DRAFTS</button>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto no-scrollbar p-4 space-y-4">
+<!-- TRIP CARD 1: ACTIVE (Dispatched) -->
+<div class="p-4 bg-white border-2 border-primary rounded-xl flex gap-4 cursor-pointer hover:shadow-md transition-all relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2">
+<span class="text-[10px] font-bold bg-primary text-on-primary px-2 py-0.5 rounded">#TRK-8802</span>
+</div>
+<div class="flex flex-col items-center gap-1 w-4">
+<div class="w-2.5 h-2.5 rounded-full bg-primary border border-primary"></div>
+<div class="flex-1 w-[1px] dashed-line my-1"></div>
+<div class="w-2.5 h-2.5 rounded-full border border-outline bg-white"></div>
+<div class="flex-1 w-[1px] dashed-line my-1 opacity-50"></div>
+<div class="w-2.5 h-2.5 rounded-full border border-outline bg-white opacity-50"></div>
+</div>
+<div class="flex-1">
+<div class="text-xs font-bold text-primary mb-1 uppercase tracking-tight">Active Dispatch</div>
+<div class="text-sm font-bold truncate">Terminal 4, Port Authority</div>
+<div class="text-sm text-secondary truncate">Distribution Hub B</div>
+<div class="mt-4 flex justify-between items-end">
+<div>
+<p class="text-[10px] text-secondary uppercase font-bold">Cargo</p>
+<p class="text-xs font-bold">Heavy Machinery (420kg)</p>
+</div>
+<div class="text-right">
+<p class="text-[10px] text-secondary uppercase font-bold">ETA</p>
+<p class="text-xs font-bold">14:30 PM</p>
+</div>
+</div>
+</div>
+</div>
+<!-- TRIP CARD 2: DRAFT -->
+<div class="p-4 bg-surface border border-outline-variant rounded-xl flex gap-4 cursor-pointer hover:border-primary transition-all">
+<div class="flex flex-col items-center gap-1 w-4">
+<div class="w-2.5 h-2.5 rounded-full border-2 border-primary bg-white"></div>
+<div class="flex-1 w-[1px] dashed-line my-1"></div>
+<div class="w-2.5 h-2.5 rounded-full border border-outline-variant bg-white"></div>
+</div>
+<div class="flex-1">
+<div class="text-xs font-bold text-secondary mb-1 uppercase tracking-tight">Draft Trip</div>
+<div class="text-sm font-bold truncate">Logistics Center East</div>
+<div class="text-sm text-secondary truncate">Retail Mall North</div>
+<div class="mt-4 flex justify-between items-end">
+<div>
+<p class="text-[10px] text-secondary uppercase font-bold">Cargo</p>
+<p class="text-xs font-bold">Electronics (310kg)</p>
+</div>
+<button class="p-1 rounded hover:bg-white transition-colors">
+<span class="material-symbols-outlined text-sm">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- TRIP CARD 3: COMPLETED -->
+<div class="p-4 bg-white border border-outline-variant rounded-xl flex gap-4 opacity-70 grayscale">
+<div class="flex flex-col items-center gap-1 w-4">
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+<div class="flex-1 w-[1px] bg-secondary my-1"></div>
+<div class="w-2.5 h-2.5 rounded-full bg-secondary"></div>
+</div>
+<div class="flex-1">
+<div class="text-xs font-bold text-secondary mb-1 uppercase tracking-tight">Completed</div>
+<div class="text-sm font-bold truncate">Storage Unit 12</div>
+<div class="text-sm text-secondary truncate">Corporate HQ</div>
+<div class="mt-4">
+<span class="text-[10px] bg-surface-container-high px-2 py-0.5 rounded font-bold">ID: 99120-X</span>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- RIGHT PANEL: DETAIL & DISPATCH (~70%) -->
+<section class="flex-1 bg-white flex flex-col overflow-y-auto no-scrollbar">
+<!-- SECTION: SCHEDULE NEW TRIP -->
+<div class="p-margin-lg border-b border-outline-variant bg-surface-container-low">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+<!-- LEFT PANEL: CREATE NEW TRIP FORM -->
+<div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm">
+<div class="flex justify-between items-center mb-6">
+<h2 class="font-headline-md text-headline-md text-primary">Create New Trip</h2>
+<span class="text-[10px] font-bold text-secondary uppercase tracking-widest">Step 1 of 2</span>
+</div>
+<div class="grid grid-cols-2 gap-4 mb-4">
+<div class="space-y-1">
+<label class="text-[10px] font-bold uppercase text-secondary">Source</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-sm">location_on</span>
+<input class="w-full bg-surface border border-outline-variant rounded-lg pl-9 pr-4 py-2 text-sm focus:ring-0 focus:border-primary" type="text" value="Main Hub - Chicag"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-bold uppercase text-secondary">Destination</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-sm">flag</span>
+<input class="w-full bg-surface border border-outline-variant rounded-lg pl-9 pr-4 py-2 text-sm focus:ring-0 focus:border-primary" placeholder="Enter destination..." type="text"/>
+</div>
+</div>
+</div>
+<div class="space-y-4 mb-6">
+<div class="space-y-1">
+<label class="text-[10px] font-bold uppercase text-secondary">Vehicle Assignment</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 text-sm appearance-none focus:ring-0 focus:border-primary">
+<option>Select available vehicle...</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none">keyboard_arrow_down</span>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-bold uppercase text-secondary">Driver</label>
+<div class="relative">
+<select class="w-full bg-surface border border-outline-variant rounded-lg px-4 py-2 text-sm appearance-none focus:ring-0 focus:border-primary">
+<option>Select driver...</option>
+</select>
+<span class="material-symbols-outlined absolute right-3 top-1/2 -translate-y-1/2 text-secondary pointer-events-none">keyboard_arrow_down</span>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-[10px] font-bold uppercase text-secondary">Cargo Weight (kg)</label>
+<div class="flex items-center gap-4">
+<input class="w-48 bg-surface border border-outline-variant rounded-lg px-4 py-2 text-sm font-bold focus:ring-0 focus:border-primary" type="number" value="850"/>
+<div class="flex items-center gap-1 text-secondary">
+<span class="material-symbols-outlined text-sm">info</span>
+<span class="text-xs">Limit: 2000kg</span>
+</div>
+</div>
+</div>
+</div>
+<button class="w-full bg-primary text-on-primary py-4 rounded-lg font-bold text-sm hover:bg-primary-container transition-colors">Initialize Trip Request</button>
+</div>
+<!-- RIGHT PANEL: LIVE PREVIEW & WARNING -->
+<div class="flex flex-col gap-4">
+<div class="bg-white p-6 rounded-xl border border-outline-variant shadow-sm">
+<div class="flex justify-between items-start mb-6">
+<div class="flex gap-4">
+<div class="w-16 h-16 bg-surface-container rounded-lg overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover grayscale" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaII216ECGC95uo0kMouMFhhDju9IA9FOebpdl_0eeBdyU1lSuTz0oSpYufLdA2HVx5e91ejnvuRwzcDiQMWAyf08N3g3iE4Xz-5x6V2YNDk14DLzzw43U2uivE70XW3nFeIRmlL-JwseLJZ_PaEEynmRJ_V2Wwgez_ijqgvhW-_4N07EPAhbhCx1qEE8dWR3hyKCSjGMwZNVFOulQa7v8vTxfOKfkbaw31QYDC16DoWazpxzKSkUm"/>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="font-bold text-lg">TRK-89452</h3>
+<span class="bg-surface-container-high text-[10px] font-bold px-2 py-0.5 rounded flex items-center gap-1">
+<span class="material-symbols-outlined text-[12px]">local_shipping</span> IN TRANSIT
+                                </span>
+</div>
+<p class="text-xs text-secondary">Chicago Hub → Miami Distribution</p>
+</div>
+</div>
+<div class="text-right">
+<p class="text-[10px] font-bold text-secondary uppercase">ETA</p>
+<p class="text-lg font-black">08:45 PM</p>
+</div>
+</div>
+<div class="border-t border-b border-outline-variant py-4 flex justify-between items-center mb-6">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container overflow-hidden">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCtlXpImn4B2hQxA0A3_V9kkXPEvJ_0yE22RDB-6YO9swd8l2QhWoCZ_ezbzfcUGKLsw7dRQu8kZ0gQQwzAfaiJ01YuU-G5HJB4qWLdQn1d4sdGyv6fNLGbTtD4Mv3IBmZxKoDHrnKVg-hZf8MXAL9VHWs5CEbnZR_cXbuTk7Z_MTp04RHpwcaX-YnCSzZwrILBT5yabO_rX9P9HAhdjlx_xhkpv9twxMD6tmMtREOHN5P1CE1IQieb"/>
+</div>
+<div>
+<p class="text-[10px] font-bold text-secondary uppercase">Driver</p>
+<p class="text-sm font-bold">Sarah Williams</p>
+</div>
+</div>
+<div class="flex items-center gap-8">
+<div>
+<p class="text-[10px] font-bold text-secondary uppercase">Payload</p>
+<p class="text-sm font-bold">1,240 kg <span class="text-secondary font-normal">/ 2k</span></p>
+</div>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg text-xs font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm">call</span> Call Driver
+                        </button>
+</div>
+</div>
+<div>
+<div class="flex justify-between items-center mb-4">
+<p class="text-[10px] font-bold text-secondary uppercase tracking-widest">Shipment Progress</p>
+<p class="text-xl font-black">64%</p>
+</div>
+<div class="relative pt-2 pb-8">
+<div class="absolute top-4 left-0 w-full h-1 bg-surface-container-highest rounded-full"></div>
+<div class="absolute top-4 left-0 w-[64%] h-1 bg-primary rounded-full"></div>
+<div class="flex justify-between relative">
+<div class="flex flex-col items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[10px]">check</span>
+</div>
+<span class="text-[10px] font-bold uppercase">Confirmed</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-primary flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-[10px]">check</span>
+</div>
+<span class="text-[10px] font-bold uppercase">Prepared</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-white border-2 border-primary"></div>
+<span class="text-[10px] font-bold uppercase">In Transit</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-4 h-4 rounded-full bg-white border-2 border-outline-variant"></div>
+<span class="text-[10px] font-bold uppercase text-secondary">Delivered</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- WARNING BANNER -->
+<div class="bg-error-container/30 border border-error/20 p-4 rounded-xl flex items-start gap-4">
+<div class="w-10 h-10 bg-error-container rounded-lg flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-error">warning</span>
+</div>
+<div class="flex-1">
+<div class="flex justify-between items-start">
+<div>
+<p class="text-sm font-bold text-error">Trip Delayed: VH-002</p>
+<p class="text-xs text-on-surface-variant mt-1">Engine warning light reported by Michael Johnson at 10:14 AM near Indianapolis.</p>
+</div>
+<button class="text-sm font-bold text-primary hover:underline">Re-route</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- SECTION: TRACKING & VISUALIZATION -->
+<div class="flex-1 grid grid-cols-1 xl:grid-cols-2">
+<!-- MAP VIEW -->
+<div class="relative border-r border-outline-variant min-h-[400px] overflow-hidden group">
+<div class="absolute inset-0 bg-surface-container" data-alt="A professional, dark-themed satellite map of a metropolitan harbor area showing cargo terminals and industrial roads. The map uses a minimalist UI style with thin neon-white lines for major routes and a high-contrast monochromatic black and white terrain. Subtle blue and gray highlights define the water and urban grid." data-location="New York City" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuD3t67G_mGpwx38fRxqqxbgFsJTiVhRbO6guTv5SH6vYf-vkH143p8_tVtjQeNovIoYdHnT9Pf1vRW7nZrHntow4lclKaCdQ8PBUSaIgsOerYJdogpyqKOi9xucSnCn_q4BAnmlOR4DffDisX7AOCUh7h1_wjkqxw0OKums6E2I6tHv792Y3hgicGIrC9KaV9ElBwaS2N-tigSe8QkcLwzyxIF6cGcC9jCBBlFnta-jZFyhe0_Czm0M')"></div>
+<!-- Route Layer Overlay (Simulation) -->
+<svg class="absolute inset-0 w-full h-full pointer-events-none" viewbox="0 0 400 400">
+<path d="M 50 350 L 150 200 L 250 250 L 350 50" fill="none" opacity="0.6" stroke="black" stroke-dasharray="8 4" stroke-width="3"></path>
+<circle cx="150" cy="200" fill="#111111" r="6"></circle>
+</svg>
+<!-- Floating Chips -->
+<div class="absolute inset-0 p-6 flex flex-col justify-between pointer-events-none">
+<div class="flex flex-wrap gap-2 pointer-events-auto">
+<div class="bg-white/90 backdrop-blur-md border border-outline-variant px-3 py-2 rounded-lg flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">location_on</span>
+<span class="text-xs font-bold">Jersey City Terminal</span>
+</div>
+<div class="bg-white/90 backdrop-blur-md border border-outline-variant px-3 py-2 rounded-lg flex items-center gap-2 shadow-sm">
+<span class="material-symbols-outlined text-primary text-[18px]">speed</span>
+<span class="text-xs font-bold">60 mph</span>
+</div>
+</div>
+<div class="flex justify-between items-end">
+<div class="bg-white/90 backdrop-blur-md border border-outline-variant p-4 rounded-xl shadow-lg pointer-events-auto flex items-center gap-4">
+<div class="text-center border-r border-outline-variant pr-4">
+<p class="text-[10px] text-secondary uppercase font-bold">KM Left</p>
+<p class="text-xl font-black">45</p>
+</div>
+<div class="text-center">
+<p class="text-[10px] text-secondary uppercase font-bold">ETA</p>
+<p class="text-xl font-black">14:30</p>
+</div>
+</div>
+<button class="pointer-events-auto w-12 h-12 bg-white rounded-full flex items-center justify-center border border-outline-variant shadow-lg hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined">center_focus_strong</span>
+</button>
+</div>
+</div>
+</div>
+<!-- TRUCK VISUALIZATION -->
+<div class="p-8 flex flex-col justify-center items-center bg-surface">
+<div class="w-full max-w-md relative">
+<img class="w-full opacity-90" data-alt="A high-fidelity, studio-lit industrial truck side-profile illustration. The truck is a modern, sleek semi-trailer with a matte black and white color scheme. The lighting is dramatic and clinical, highlighting the metallic textures and precision engineering of the vehicle. Set against a clean, light gray minimalist background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCaII216ECGC95uo0kMouMFhhDju9IA9FOebpdl_0eeBdyU1lSuTz0oSpYufLdA2HVx5e91ejnvuRwzcDiQMWAyf08N3g3iE4Xz-5x6V2YNDk14DLzzw43U2uivE70XW3nFeIRmlL-JwseLJZ_PaEEynmRJ_V2Wwgez_ijqgvhW-_4N07EPAhbhCx1qEE8dWR3hyKCSjGMwZNVFOulQa7v8vTxfOKfkbaw31QYDC16DoWazpxzKSkUm"/>
+<!-- Capacity Overlay -->
+<div class="absolute inset-0 flex flex-col items-center justify-end pb-12 pointer-events-none">
+<div class="w-[80%] h-12 bg-white/40 border border-white/60 backdrop-blur-sm rounded-lg overflow-hidden flex items-center px-1">
+<div class="h-10 bg-primary rounded shadow-inner flex items-center justify-center text-white text-[10px] font-black" style="width: 71%">
+                                    71% CAPACITY
+                                </div>
+</div>
+<div class="mt-4 flex gap-8">
+<div class="text-center">
+<span class="block text-[10px] font-bold text-secondary uppercase tracking-widest">Weight</span>
+<span class="text-lg font-black text-primary">420.0 kg</span>
+</div>
+<div class="text-center">
+<span class="block text-[10px] font-bold text-secondary uppercase tracking-widest">Volume</span>
+<span class="text-lg font-black text-primary">12.4 m³</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Additional Context Stats -->
+<div class="grid grid-cols-2 gap-4 w-full mt-12">
+<div class="p-4 bg-white border border-outline-variant rounded-xl">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm text-secondary">tire_repair</span>
+<span class="text-[10px] font-bold text-secondary uppercase">Fleet Status</span>
+</div>
+<div class="flex items-end justify-between">
+<span class="text-sm font-black">GOOD</span>
+<span class="text-xs text-primary">94% Health</span>
+</div>
+</div>
+<div class="p-4 bg-white border border-outline-variant rounded-xl">
+<div class="flex items-center gap-2 mb-2">
+<span class="material-symbols-outlined text-sm text-secondary">local_gas_station</span>
+<span class="text-[10px] font-bold text-secondary uppercase">Fuel Range</span>
+</div>
+<div class="flex items-end justify-between">
+<span class="text-sm font-black">620 KM</span>
+<span class="text-xs text-error font-bold">Needs Refill</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- FAB for Quick Actions -->
+<button class="fixed bottom-8 right-8 w-14 h-14 bg-primary text-on-primary rounded-full shadow-2xl flex items-center justify-center hover:scale-105 active:scale-95 transition-all z-50 group">
+<span class="material-symbols-outlined">add</span>
+<span class="absolute right-full mr-4 bg-primary text-white text-xs px-3 py-2 rounded-lg opacity-0 group-hover:opacity-100 whitespace-nowrap transition-opacity font-bold">Manual Dispatch</span>
+</button>
+<script>
+        // Micro-interactions and hover logic
+        document.querySelectorAll('.cursor-pointer').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                el.classList.add('translate-x-1');
+            });
+            el.addEventListener('mouseleave', () => {
+                el.classList.remove('translate-x-1');
+            });
+        });
+
+        // Simple capacity change simulation for the detail panel
+        const weightInput = document.querySelector('input[type="number"]');
+        const errorBanner = document.querySelector('.bg-error-container');
+        const dispatchBtn = document.querySelector('button[disabled]');
+
+        weightInput.addEventListener('input', (e) => {
+            const val = parseInt(e.target.value);
+            if (val <= 500) {
+                errorBanner.classList.add('hidden');
+                dispatchBtn.removeAttribute('disabled');
+                dispatchBtn.classList.remove('opacity-30', 'cursor-not-allowed');
+                dispatchBtn.classList.add('hover:bg-primary-container');
+            } else {
+                errorBanner.classList.remove('hidden');
+                dispatchBtn.setAttribute('disabled', 'true');
+                dispatchBtn.classList.add('opacity-30', 'cursor-not-allowed');
+                dispatchBtn.classList.remove('hover:bg-primary-container');
+            }
+        });
+    </script>
+</body></html>        
