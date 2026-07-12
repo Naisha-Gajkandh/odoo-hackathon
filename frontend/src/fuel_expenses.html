@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FleetCentral | Fuel &amp; Expense Management</title>
+<!-- Google Fonts: Manrope for headlines, Inter for body -->
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@600;700;800&amp;family=Inter:wght@400;600&amp;display=swap" rel="stylesheet"/>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-container": "#2f5cff",
+                    "error": "#ba1a1a",
+                    "on-secondary": "#ffffff",
+                    "surface": "#fbf8ff",
+                    "surface-tint": "#124aef",
+                    "on-primary-fixed-variant": "#0035bd",
+                    "primary-fixed-dim": "#b8c3ff",
+                    "on-secondary-container": "#606366",
+                    "on-tertiary-container": "#ffeee8",
+                    "surface-container": "#ededfa",
+                    "on-error-container": "#93000a",
+                    "secondary-container": "#dedfe3",
+                    "on-secondary-fixed-variant": "#44474a",
+                    "primary-fixed": "#dde1ff",
+                    "surface-variant": "#e2e1ef",
+                    "on-tertiary": "#ffffff",
+                    "background": "#fbf8ff",
+                    "on-primary-fixed": "#001355",
+                    "surface-dim": "#d9d9e6",
+                    "outline": "#747688",
+                    "on-surface": "#191b24",
+                    "tertiary-container": "#c24300",
+                    "error-container": "#ffdad6",
+                    "primary": "#0041e1",
+                    "on-primary-container": "#f0f0ff",
+                    "surface-container-highest": "#e2e1ef",
+                    "surface-container-lowest": "#ffffff",
+                    "inverse-surface": "#2e303a",
+                    "tertiary-fixed-dim": "#ffb59a",
+                    "tertiary-fixed": "#ffdbcf",
+                    "surface-container-low": "#f3f2ff",
+                    "inverse-primary": "#b8c3ff",
+                    "on-background": "#191b24",
+                    "secondary-fixed": "#e1e2e6",
+                    "on-surface-variant": "#434656",
+                    "on-tertiary-fixed": "#380d00",
+                    "on-error": "#ffffff",
+                    "secondary-fixed-dim": "#c5c6ca",
+                    "on-secondary-fixed": "#191c1f",
+                    "tertiary": "#993300",
+                    "surface-bright": "#fbf8ff",
+                    "surface-container-high": "#e7e7f4",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#f0effd",
+                    "secondary": "#5c5e62",
+                    "outline-variant": "#c4c5d9",
+                    "on-tertiary-fixed-variant": "#802a00"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack_gap_sm": "0.5rem",
+                    "stack_gap_md": "1rem",
+                    "detail_panel_width": "70%",
+                    "list_panel_width": "30%",
+                    "nav_rail_width": "72px",
+                    "container_padding": "2rem",
+                    "gutter": "1.5rem"
+            },
+            "fontFamily": {
+                    "headline-md": ["Manrope"],
+                    "title-sm": ["Inter"],
+                    "body-rg": ["Inter"],
+                    "display-lg": ["Manrope"],
+                    "label-bold": ["Inter"],
+                    "body-sm": ["Inter"]
+            },
+            "fontSize": {
+                    "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                    "title-sm": ["16px", {"lineHeight": "24px", "fontWeight": "600"}],
+                    "body-rg": ["14px", {"lineHeight": "20px", "fontWeight": "400"}],
+                    "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-bold": ["12px", {"lineHeight": "16px", "fontWeight": "600"}],
+                    "body-sm": ["12px", {"lineHeight": "18px", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .soft-shadow {
+            box-shadow: 0 10px 30px -10px rgba(0, 65, 225, 0.08);
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Custom capacity bar style */
+        .capacity-bar-fill {
+            transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-rg selection:bg-primary-container selection:text-on-primary-container">
+<!-- Navigation Rail -->
+<aside class="w-[72px] h-screen fixed left-0 top-0 flex flex-col items-center py-6 bg-surface dark:bg-surface-container-lowest border-r border-outline-variant dark:border-outline z-50" id="SideNavBar">
+<div class="flex flex-col items-center gap-8 h-full justify-between">
+<div class="flex flex-col items-center gap-6">
+<!-- Brand Logo -->
+<div class="text-primary font-headline-md text-headline-md mb-4 bg-primary/10 p-2 rounded-xl">
+<span class="material-symbols-outlined text-3xl">local_shipping</span>
+</div>
+<!-- Nav Items -->
+<nav class="flex flex-col items-center gap-2">
+<div class="group relative flex items-center justify-center w-12 h-12 rounded-xl text-on-surface-variant dark:text-on-secondary-container opacity-70 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-90">
+<span class="material-symbols-outlined">dashboard</span>
+</div>
+<div class="group relative flex items-center justify-center w-12 h-12 rounded-xl text-on-surface-variant dark:text-on-secondary-container opacity-70 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-90">
+<span class="material-symbols-outlined">route</span>
+</div>
+<div class="group relative flex items-center justify-center w-12 h-12 rounded-xl text-on-surface-variant dark:text-on-secondary-container opacity-70 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-90">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div class="group relative flex items-center justify-center w-12 h-12 rounded-xl text-on-surface-variant dark:text-on-secondary-container opacity-70 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-90">
+<span class="material-symbols-outlined">person</span>
+</div>
+<div class="group relative flex items-center justify-center w-12 h-12 rounded-xl text-on-surface-variant dark:text-on-secondary-container opacity-70 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-90">
+<span class="material-symbols-outlined">build</span>
+</div>
+<!-- ACTIVE: Financials -->
+<div class="relative flex items-center justify-center w-12 h-12 rounded-xl text-primary dark:text-primary-fixed-dim before:content-[''] before:absolute before:-left-3 before:top-1/4 before:h-1/2 before:w-1 before:bg-primary before:rounded-r-full bg-primary-container/10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">payments</span>
+</div>
+<div class="group relative flex items-center justify-center w-12 h-12 rounded-xl text-on-surface-variant dark:text-on-secondary-container opacity-70 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-90">
+<span class="material-symbols-outlined">analytics</span>
+</div>
+<div class="group relative flex items-center justify-center w-12 h-12 rounded-xl text-on-surface-variant dark:text-on-secondary-container opacity-70 hover:bg-surface-container-high transition-colors cursor-pointer active:scale-90">
+<span class="material-symbols-outlined">settings</span>
+</div>
+</nav>
+</div>
+<div class="flex flex-col items-center gap-4">
+<div class="group relative flex items-center justify-center w-12 h-12 rounded-xl text-on-surface-variant opacity-70 hover:bg-surface-container-high cursor-pointer transition-colors">
+<span class="material-symbols-outlined">help</span>
+</div>
+<div class="w-10 h-10 rounded-full bg-surface-container-high flex items-center justify-center overflow-hidden border border-outline-variant">
+<img class="w-full h-full object-cover" data-alt="A professional headshot of a logistics operations manager in a bright, modern corporate setting. The lighting is soft and natural, with a blurred high-tech office background in shades of light blue and white. The subject is smiling warmly, dressed in a sharp business casual outfit, conveying a sense of calm authority and operational expertise." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAvsU9Px5jyD4r4AI5iKzZ7Ithsquc4dM6s6YtDeY4ln4SAXg2nC6Eamm2bXq_rTJHax_hSc3836OZqz8tX0KjQBRDfwnhxTjXMJvVyawMcsZLoIH6ERudZz1ip5hxMtUASmYU09X2lk_PVgQhAPg3i_LYRLGsdUcCA2pQTxt-sKrBdEQ9Una6DDaOPyE5zI2gO9BvL9Szli-bRfNFDaogor7I2Z3ljVHy5Y6WUToEBiyGcdnHCJbMp"/>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-[72px] min-h-screen">
+<!-- Top App Bar -->
+<header class="h-16 w-full px-8 flex justify-between items-center sticky top-0 z-40 bg-surface dark:bg-surface-container-lowest border-b border-outline-variant dark:border-outline" id="TopAppBar">
+<div class="flex items-center gap-8">
+<h1 class="font-display-lg text-display-lg text-primary dark:text-primary-fixed-dim font-black">FleetCentral</h1>
+<div class="hidden md:flex items-center gap-6">
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary transition-all font-body-rg" href="#">Live Tracking</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary transition-all font-body-rg" href="#">Fleet Status</a>
+<a class="text-on-surface-variant dark:text-on-secondary-container hover:text-primary transition-all font-body-rg" href="#">Alerts</a>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="bg-error-container text-on-error-container px-4 py-2 rounded-lg font-label-bold flex items-center gap-2 hover:opacity-90 active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">report</span>
+                    Emergency
+                </button>
+<button class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-bold flex items-center gap-2 hover:bg-primary-container active:scale-95 transition-all">
+<span class="material-symbols-outlined text-[18px]">add</span>
+                    Create Trip
+                </button>
+<div class="h-8 w-px bg-outline-variant mx-2"></div>
+<div class="flex items-center gap-2">
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-full transition-colors">
+<span class="material-symbols-outlined">apps</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<section class="p-8 max-w-7xl mx-auto space-y-8">
+<!-- Header Section with Stats -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+<div>
+<h2 class="font-headline-md text-headline-md">Financial Overview</h2>
+<p class="text-on-surface-variant font-body-rg">Monitoring fuel, tolls, and maintenance expenditures across the active fleet.</p>
+</div>
+<!-- Large Stat Chip -->
+<div class="bg-primary-container text-on-primary-container px-8 py-6 rounded-2xl flex flex-col items-center md:items-end soft-shadow border border-white/10">
+<span class="font-label-bold uppercase tracking-wider text-[10px] opacity-80 mb-1">Total Operational Cost</span>
+<div class="flex items-baseline gap-2">
+<span class="font-display-lg text-display-lg">$142,580</span>
+<span class="font-label-bold text-green-300 flex items-center">
+<span class="material-symbols-outlined text-sm">trending_down</span>
+                            4.2%
+                        </span>
+</div>
+</div>
+</div>
+<!-- Dashboard Controls -->
+<div class="flex items-center justify-between border-b border-outline-variant pb-4">
+<div class="flex gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container border-none rounded-xl focus:ring-2 focus:ring-primary w-64 text-body-rg" placeholder="Search vehicle ID..." type="text"/>
+</div>
+<button class="flex items-center gap-2 px-4 py-2 rounded-xl bg-surface-container-high hover:bg-surface-container-highest transition-colors font-label-bold">
+<span class="material-symbols-outlined">filter_list</span>
+                        Filters
+                    </button>
+</div>
+<div class="flex bg-surface-container p-1 rounded-xl">
+<button class="px-4 py-1.5 rounded-lg bg-surface-container-lowest soft-shadow font-label-bold text-primary">Monthly</button>
+<button class="px-4 py-1.5 rounded-lg font-label-bold text-on-surface-variant hover:text-primary transition-colors">Quarterly</button>
+<button class="px-4 py-1.5 rounded-lg font-label-bold text-on-surface-variant hover:text-primary transition-colors">YTD</button>
+</div>
+</div>
+<!-- Cards Grid: Fuel & Expenses -->
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<!-- Vehicle Card 1 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 soft-shadow border border-outline-variant/30 flex flex-col gap-6 group hover:border-primary/50 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">local_shipping</span>
+</div>
+<div>
+<h3 class="font-title-sm text-title-sm text-primary">VHC-8829-XL</h3>
+<p class="text-body-sm text-on-surface-variant">Long-Haul Trailer • Zone A</p>
+</div>
+</div>
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] font-label-bold text-on-surface-variant uppercase">Active</span>
+</div>
+<!-- Budget Gauge -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-body-sm font-label-bold text-on-surface-variant">Monthly Budget Usage</span>
+<span class="text-headline-md text-headline-md text-primary">70%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="capacity-bar-fill h-full bg-primary-container" style="width: 70%"></div>
+</div>
+<div class="flex justify-between text-[10px] text-on-surface-variant/60 font-label-bold">
+<span>$0.00</span>
+<span>$12,000.00 Limit</span>
+</div>
+</div>
+<!-- Expense Breakdown -->
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/20">
+<div class="space-y-1">
+<p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Fuel Costs</p>
+<p class="font-title-sm text-title-sm">$6,420.50</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Tolls &amp; Fees</p>
+<p class="font-title-sm text-title-sm">$1,280.00</p>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-auto pt-4">
+<button class="flex-1 py-2 text-primary font-label-bold border border-primary/20 rounded-lg hover:bg-primary-container/10 transition-colors">View Details</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Vehicle Card 2 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 soft-shadow border border-outline-variant/30 flex flex-col gap-6 group hover:border-primary/50 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">delivery_dining</span>
+</div>
+<div>
+<h3 class="font-title-sm text-title-sm text-primary">VAN-4412-SM</h3>
+<p class="text-body-sm text-on-surface-variant">Last-Mile Delivery • Zone B</p>
+</div>
+</div>
+<span class="bg-error-container/20 px-2 py-1 rounded text-[10px] font-label-bold text-error uppercase">Over Budget</span>
+</div>
+<!-- Budget Gauge -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-body-sm font-label-bold text-on-surface-variant">Monthly Budget Usage</span>
+<span class="text-headline-md text-headline-md text-error">92%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="capacity-bar-fill h-full bg-error" style="width: 92%"></div>
+</div>
+<div class="flex justify-between text-[10px] text-on-surface-variant/60 font-label-bold">
+<span>$0.00</span>
+<span>$4,500.00 Limit</span>
+</div>
+</div>
+<!-- Expense Breakdown -->
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/20">
+<div class="space-y-1">
+<p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Fuel Costs</p>
+<p class="font-title-sm text-title-sm">$3,840.10</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Tolls &amp; Fees</p>
+<p class="font-title-sm text-title-sm">$300.20</p>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-auto pt-4">
+<button class="flex-1 py-2 text-primary font-label-bold border border-primary/20 rounded-lg hover:bg-primary-container/10 transition-colors">View Details</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+<!-- Vehicle Card 3 -->
+<div class="bg-surface-container-lowest rounded-2xl p-6 soft-shadow border border-outline-variant/30 flex flex-col gap-6 group hover:border-primary/50 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-xl bg-primary/5 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">fire_truck</span>
+</div>
+<div>
+<h3 class="font-title-sm text-title-sm text-primary">HDT-2022-RT</h3>
+<p class="text-body-sm text-on-surface-variant">Heavy Duty Trans • Regional</p>
+</div>
+</div>
+<span class="bg-surface-container px-2 py-1 rounded text-[10px] font-label-bold text-on-surface-variant uppercase">Standby</span>
+</div>
+<!-- Budget Gauge -->
+<div class="space-y-2">
+<div class="flex justify-between items-end">
+<span class="text-body-sm font-label-bold text-on-surface-variant">Monthly Budget Usage</span>
+<span class="text-headline-md text-headline-md text-primary">45%</span>
+</div>
+<div class="h-3 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="capacity-bar-fill h-full bg-primary-container" style="width: 45%"></div>
+</div>
+<div class="flex justify-between text-[10px] text-on-surface-variant/60 font-label-bold">
+<span>$0.00</span>
+<span>$25,000.00 Limit</span>
+</div>
+</div>
+<!-- Expense Breakdown -->
+<div class="grid grid-cols-2 gap-4 pt-4 border-t border-outline-variant/20">
+<div class="space-y-1">
+<p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Fuel Costs</p>
+<p class="font-title-sm text-title-sm">$9,220.00</p>
+</div>
+<div class="space-y-1">
+<p class="text-[10px] font-label-bold text-on-surface-variant uppercase">Tolls &amp; Fees</p>
+<p class="font-title-sm text-title-sm">$2,110.00</p>
+</div>
+</div>
+<div class="flex items-center gap-2 mt-auto pt-4">
+<button class="flex-1 py-2 text-primary font-label-bold border border-primary/20 rounded-lg hover:bg-primary-container/10 transition-colors">View Details</button>
+<button class="p-2 text-on-surface-variant hover:bg-surface-container rounded-lg">
+<span class="material-symbols-outlined">more_vert</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Secondary Insight: Bento Cards -->
+<div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+<!-- Large Interactive Card: Trends -->
+<div class="lg:col-span-2 bg-surface-container-low rounded-2xl p-6 border border-outline-variant/20 relative overflow-hidden flex flex-col justify-between">
+<div class="relative z-10">
+<h4 class="font-headline-md text-headline-md text-on-surface">Weekly Spending Trend</h4>
+<p class="text-body-rg text-on-surface-variant mt-1">Average fuel price has stabilized this week.</p>
+</div>
+<div class="h-32 mt-4 flex items-end justify-between gap-2 relative z-10">
+<div class="bg-primary/20 hover:bg-primary h-12 w-full rounded-t-lg transition-all duration-500"></div>
+<div class="bg-primary/20 hover:bg-primary h-24 w-full rounded-t-lg transition-all duration-500"></div>
+<div class="bg-primary/20 hover:bg-primary h-16 w-full rounded-t-lg transition-all duration-500"></div>
+<div class="bg-primary/20 hover:bg-primary h-20 w-full rounded-t-lg transition-all duration-500"></div>
+<div class="bg-primary/20 hover:bg-primary h-28 w-full rounded-t-lg transition-all duration-500"></div>
+<div class="bg-primary/40 hover:bg-primary h-32 w-full rounded-t-lg transition-all duration-500"></div>
+<div class="bg-primary/20 hover:bg-primary h-14 w-full rounded-t-lg transition-all duration-500"></div>
+</div>
+<!-- Atmospheric background glow -->
+<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-primary/5 rounded-full blur-[80px]"></div>
+</div>
+<!-- Metric Card: Maintenance -->
+<div class="bg-surface-container-highest rounded-2xl p-6 flex flex-col justify-between group hover:bg-primary-container/5 transition-all cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-primary soft-shadow">
+<span class="material-symbols-outlined">build_circle</span>
+</div>
+<div>
+<p class="font-label-bold text-on-surface-variant uppercase tracking-wide">Maintenance Cost</p>
+<h4 class="font-display-lg text-display-lg text-on-surface">$32,410</h4>
+<p class="text-body-sm text-on-surface-variant mt-2">+12% from last month</p>
+</div>
+</div>
+<!-- Metric Card: Efficiency -->
+<div class="bg-tertiary-fixed rounded-2xl p-6 flex flex-col justify-between group hover:opacity-90 transition-all cursor-pointer">
+<div class="w-10 h-10 rounded-full bg-on-tertiary flex items-center justify-center text-tertiary soft-shadow">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">eco</span>
+</div>
+<div>
+<p class="font-label-bold text-on-tertiary-fixed-variant uppercase tracking-wide">Efficiency Score</p>
+<h4 class="font-display-lg text-display-lg text-on-tertiary-fixed">84%</h4>
+<p class="text-body-sm text-on-tertiary-fixed-variant mt-2">Optimal route planning active</p>
+</div>
+</div>
+</div>
+<!-- Detailed Expense List -->
+<div class="bg-surface-container-lowest rounded-2xl soft-shadow border border-outline-variant/30 overflow-hidden">
+<div class="p-6 border-b border-outline-variant/20 flex justify-between items-center">
+<h3 class="font-headline-md text-headline-md">Recent Transactions</h3>
+<button class="text-primary font-label-bold flex items-center gap-1 hover:underline">
+                        View Audit Log
+                        <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+</button>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container text-on-surface-variant text-[10px] uppercase font-label-bold">
+<tr>
+<th class="px-6 py-4">Vehicle ID</th>
+<th class="px-6 py-4">Description</th>
+<th class="px-6 py-4">Category</th>
+<th class="px-6 py-4">Date</th>
+<th class="px-6 py-4 text-right">Amount</th>
+<th class="px-6 py-4"></th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-bold text-primary">VHC-8829-XL</td>
+<td class="px-6 py-4 text-body-rg">Shell Gas Station - Munich North</td>
+<td class="px-6 py-4">
+<span class="bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full text-[10px] font-label-bold">FUEL</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Oct 24, 2023 • 08:45 AM</td>
+<td class="px-6 py-4 text-right font-title-sm">$480.00</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">receipt_long</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-bold text-primary">VAN-4412-SM</td>
+<td class="px-6 py-4 text-body-rg">Electronic Toll Collection - A9 Hub</td>
+<td class="px-6 py-4">
+<span class="bg-purple-100 text-purple-700 px-2 py-0.5 rounded-full text-[10px] font-label-bold">TOLLS</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Oct 24, 2023 • 11:20 AM</td>
+<td class="px-6 py-4 text-right font-title-sm">$22.50</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">receipt_long</button>
+</td>
+</tr>
+<tr class="hover:bg-surface-container-low transition-colors">
+<td class="px-6 py-4 font-label-bold text-primary">HDT-2022-RT</td>
+<td class="px-6 py-4 text-body-rg">Service Center #402 - Brake Check</td>
+<td class="px-6 py-4">
+<span class="bg-orange-100 text-orange-700 px-2 py-0.5 rounded-full text-[10px] font-label-bold">REPAIR</span>
+</td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">Oct 23, 2023 • 04:15 PM</td>
+<td class="px-6 py-4 text-right font-title-sm">$1,250.00</td>
+<td class="px-6 py-4 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary">receipt_long</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+</main>
+<script>
+        // Micro-interaction: Update budget bars on load
+        window.addEventListener('DOMContentLoaded', () => {
+            const bars = document.querySelectorAll('.capacity-bar-fill');
+            bars.forEach(bar => {
+                const targetWidth = bar.style.width;
+                bar.style.width = '0%';
+                setTimeout(() => {
+                    bar.style.width = targetWidth;
+                }, 100);
+            });
+        });
+    </script>
+</body></html>
+
