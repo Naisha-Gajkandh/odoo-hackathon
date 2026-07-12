@@ -1,0 +1,250 @@
+{
+  "info": {
+    "name": "TransitOps API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "base_url", "value": "http://localhost:8000" },
+    { "key": "access_token", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "var data = pm.response.json();",
+                "if (data.access) { pm.collectionVariables.set('access_token', data.access); }"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/api/auth/login/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"dispatcher@transitops.co\",\n  \"password\": \"changeme123\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Google Login",
+          "event": [{
+            "listen": "test",
+            "script": {
+              "exec": [
+                "var data = pm.response.json();",
+                "if (data.access) { pm.collectionVariables.set('access_token', data.access); }"
+              ]
+            }
+          }],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{base_url}}/api/auth/google/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id_token\": \"<paste id_token from Google Identity Services here>\",\n  \"role\": \"Dispatcher\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fleet",
+      "item": [
+        {
+          "name": "List Vehicles",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": "{{base_url}}/api/fleet/vehicles/"
+          }
+        },
+        {
+          "name": "Create Vehicle",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/fleet/vehicles/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"registration_number\": \"VAN-05\",\n  \"name_model\": \"Tata Ace\",\n  \"vehicle_type\": \"Van\",\n  \"max_load_capacity_kg\": 500,\n  \"odometer\": 0,\n  \"acquisition_cost\": 620000,\n  \"region\": \"West\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Drivers",
+      "item": [
+        {
+          "name": "List Drivers",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": "{{base_url}}/api/drivers/"
+          }
+        },
+        {
+          "name": "Create Driver",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/drivers/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Alex\",\n  \"license_number\": \"GJ01AB1234\",\n  \"license_category\": \"LMV\",\n  \"license_expiry_date\": \"2027-01-01\",\n  \"contact_number\": \"9999999999\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Trips",
+      "item": [
+        {
+          "name": "Create Trip",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/trips/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trip_code\": \"TR001\",\n  \"source\": \"Depot A\",\n  \"destination\": \"Depot B\",\n  \"vehicle\": 1,\n  \"driver\": 1,\n  \"cargo_weight_kg\": 450,\n  \"planned_distance_km\": 120\n}"
+            }
+          }
+        },
+        {
+          "name": "Create Trip - Overload (should fail)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/trips/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"trip_code\": \"TR002\",\n  \"source\": \"Depot A\",\n  \"destination\": \"Depot C\",\n  \"vehicle\": 1,\n  \"driver\": 1,\n  \"cargo_weight_kg\": 700,\n  \"planned_distance_km\": 60\n}"
+            }
+          }
+        },
+        {
+          "name": "Dispatch Trip",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": "{{base_url}}/api/trips/1/dispatch/"
+          }
+        },
+        {
+          "name": "Complete Trip",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/trips/1/complete/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"final_odometer\": 120,\n  \"fuel_consumed_liters\": 15\n}"
+            }
+          }
+        },
+        {
+          "name": "Cancel Trip",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": "{{base_url}}/api/trips/1/cancel/"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Maintenance",
+      "item": [
+        {
+          "name": "Create Maintenance Record",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/maintenance/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle\": 1,\n  \"service_type\": \"Oil Change\",\n  \"cost\": 1500,\n  \"date\": \"2026-07-12\",\n  \"status\": \"Active\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finance",
+      "item": [
+        {
+          "name": "Log Fuel",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{access_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": "{{base_url}}/api/finance/fuel-logs/",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle\": 1,\n  \"date\": \"2026-07-12\",\n  \"liters\": 15,\n  \"cost\": 1400\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics",
+      "item": [
+        {
+          "name": "Dashboard KPIs",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": "{{base_url}}/api/analytics/dashboard/"
+          }
+        },
+        {
+          "name": "Recent Trips",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": "{{base_url}}/api/analytics/recent-trips/"
+          }
+        },
+        {
+          "name": "Reports Summary",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{access_token}}" }],
+            "url": "{{base_url}}/api/analytics/reports/"
+          }
+        }
+      ]
+    }
+  ]
+}
